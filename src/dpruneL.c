@@ -46,25 +46,25 @@ at the top-level directory.
 
 void
 dpruneL(
-       const int  jcol,	     /* in */
-       const int  *perm_r,   /* in */
-       const int  pivrow,    /* in */
-       const int  nseg,	     /* in */
-       const int  *segrep,   /* in */
-       const int  *repfnz,   /* in */
-       int        *xprune,   /* out */
+       const long long  jcol,	     /* in */
+       const long long  *perm_r,   /* in */
+       const long long  pivrow,    /* in */
+       const long long  nseg,	     /* in */
+       const long long  *segrep,   /* in */
+       const long long  *repfnz,   /* in */
+       long long        *xprune,   /* out */
        GlobalLU_t *Glu       /* modified - global LU data structures */
        )
 {
 
     double     utemp;
-    int        jsupno, irep, irep1, kmin, kmax, krow, movnum;
-    int        i, ktemp, minloc, maxloc;
-    int        do_prune; /* logical variable */
-    int        *xsup, *supno;
-    int        *lsub, *xlsub;
+    long long        jsupno, irep, irep1, kmin, kmax, krow, movnum;
+    long long        i, ktemp, minloc, maxloc;
+    long long        do_prune; /* logical variable */
+    long long        *xsup, *supno;
+    long long        *lsub, *xlsub;
     double     *lusup;
-    int        *xlusup;
+    long long        *xlusup;
 
     xsup       = Glu->xsup;
     supno      = Glu->supno;

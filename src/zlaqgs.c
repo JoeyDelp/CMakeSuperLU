@@ -99,7 +99,7 @@ zlaqgs(SuperMatrix *A, double *r, double *c,
     /* Local variables */
     NCformat *Astore;
     doublecomplex   *Aval;
-    int i, j, irow;
+    long long i, j, irow;
     double large, small, cj;
     double temp;
 

@@ -69,7 +69,7 @@ at the top-level directory.
  *          whether X should be overwritten by A * X  or A' * X.   
  *          On the final return from CLACON, KASE will again be 0.   
  *
- *   isave  (input/output) int [3]
+ *   isave  (input/output) long long [3]
  *          ISAVE is INTEGER array, dimension (3)
  *          ISAVE is used to save variables between calls to CLACON2
  *
@@ -86,11 +86,11 @@ at the top-level directory.
  * </pre>
  */
 
-int
-clacon2_(int *n, complex *v, complex *x, float *est, int *kase, int isave[3])
+long long
+clacon2_(long long *n, complex *v, complex *x, float *est, long long *kase, long long isave[3])
 {
     /* Table of constant values */
-    int c__1 = 1;
+    long long c__1 = 1;
     complex      zero = {0.0, 0.0};
     complex      one = {1.0, 0.0};
 
@@ -98,18 +98,18 @@ clacon2_(int *n, complex *v, complex *x, float *est, int *kase, int isave[3])
     float d__1;
     
     /* Local variables */
-    int jlast;
+    long long jlast;
     float altsgn, estold;
-    int i;
+    long long i;
     float temp;
     float safmin;
     extern float smach(char *);
-    extern int icmax1_slu(int *, complex *, int *);
-    extern double scsum1_slu(int *, complex *, int *);
+    extern long long icmax1_slu(long long *, complex *, long long *);
+    extern double scsum1_slu(long long *, complex *, long long *);
 #ifdef _CRAY
-    extern int CCOPY(int *, complex *, int *, complex [], int *);
+    extern long long CCOPY(long long *, complex *, long long *, complex [], long long *);
 #else
-    extern int ccopy_(int *, complex *, int *, complex [], int *);
+    extern long long ccopy_(long long *, complex *, long long *, complex [], long long *);
 #endif
 
     safmin = smach("Safe minimum");  /* lamch_("Safe minimum"); */

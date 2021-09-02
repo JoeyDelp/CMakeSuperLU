@@ -24,7 +24,7 @@ at the top-level directory.
  * History:             Modified from lapack routine ILAENV
  */
 #include "superlu/slu_Cnames.h"
-extern int input_error(char *, int *);
+extern long long input_error(char *, long long *);
 
 /*! \brief
 
@@ -44,7 +44,7 @@ extern int input_error(char *, int *);
     Arguments   
     =========   
 
-    ISPEC   (input) int
+    ISPEC   (input) long long
             Specifies the parameter to be returned as the value of SP_IENV.   
             = 1: the panel size w; a panel consists of w consecutive
 	         columns of matrix A in the process of Gaussian elimination.
@@ -59,17 +59,17 @@ extern int input_error(char *, int *);
 	    = 6: the estimated fills factor for L and U, compared with A;
 	    = 7: the maximum size for a supernode in ILU.
 	    
-   (SP_IENV) (output) int
+   (SP_IENV) (output) long long
             >= 0: the value of the parameter specified by ISPEC   
             < 0:  if SP_IENV = -k, the k-th argument had an illegal value. 
   
     ===================================================================== 
 </pre>
 */
-int
-sp_ienv(int ispec)
+long long
+sp_ienv(long long ispec)
 {
-    int i;
+    long long i;
 
     switch (ispec) {
 	case 1: return (20);

@@ -99,7 +99,7 @@ dlaqgs(SuperMatrix *A, double *r, double *c,
     /* Local variables */
     NCformat *Astore;
     double   *Aval;
-    int i, j, irow;
+    long long i, j, irow;
     double large, small, cj;
 
 

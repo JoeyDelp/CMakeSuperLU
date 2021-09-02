@@ -31,24 +31,24 @@ at the top-level directory.
  */
 void
 ilu_relax_snode (
-	      const	int n,
-	      int	*et,	       /* column elimination tree */
-	      const int relax_columns, /* max no of columns allowed in a
+	      const	long long n,
+	      long long	*et,	       /* column elimination tree */
+	      const long long relax_columns, /* max no of columns allowed in a
 					  relaxed snode */
-	      int	*descendants,  /* no of descendants of each node
+	      long long	*descendants,  /* no of descendants of each node
 					 in the etree */
-	      int	*relax_end,    /* last column in a supernode
+	      long long	*relax_end,    /* last column in a supernode
 					* if j-th column starts a relaxed
 					* supernode, relax_end[j] represents
 					* the last column of this supernode */
-	      int	*relax_fsupc   /* first column in a supernode
+	      long long	*relax_fsupc   /* first column in a supernode
 					* relax_fsupc[j] represents the first
 					* column of j-th supernode */
 	     )
 {
 
-    register int j, f, parent;
-    register int snode_start;	/* beginning of a snode */
+    register long long j, f, parent;
+    register long long snode_start;	/* beginning of a snode */
 
     ifill (relax_end, n, EMPTY);
     ifill (relax_fsupc, n, EMPTY);

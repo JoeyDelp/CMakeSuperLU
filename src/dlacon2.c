@@ -68,7 +68,7 @@ at the top-level directory.
  *          whether X should be overwritten by A * X  or A' * X.   
  *          On the final return from DLACON, KASE will again be 0.   
  *
- *   isave  (input/output) int [3]
+ *   isave  (input/output) long long [3]
  *          ISAVE is INTEGER array, dimension (3)
  *          ISAVE is used to save variables between calls to DLACON2
  *
@@ -85,27 +85,27 @@ at the top-level directory.
  * </pre>
  */
 
-int
-dlacon2_(int *n, double *v, double *x, int *isgn, double *est, int *kase, int isave[3])
+long long
+dlacon2_(long long *n, double *v, double *x, long long *isgn, double *est, long long *kase, long long isave[3])
 {
     /* Table of constant values */
-    int c__1 = 1;
+    long long c__1 = 1;
     double      zero = 0.0;
     double      one = 1.0;
     
     /* Local variables */
-    int jlast;
+    long long jlast;
     double altsgn, estold;
-    int i;
+    long long i;
     double temp;
 #ifdef _CRAY
-    extern int ISAMAX(int *, double *, int *);
-    extern double SASUM(int *, double *, int *);
-    extern int SCOPY(int *, double *, int *, double *, int *);
+    extern long long ISAMAX(long long *, double *, long long *);
+    extern double SASUM(long long *, double *, long long *);
+    extern long long SCOPY(long long *, double *, long long *, double *, long long *);
 #else
-    extern int idamax_(int *, double *, int *);
-    extern double dasum_(int *, double *, int *);
-    extern int dcopy_(int *, double *, int *, double *, int *);
+    extern long long idamax_(long long *, double *, long long *);
+    extern double dasum_(long long *, double *, long long *);
+    extern long long dcopy_(long long *, double *, long long *, double *, long long *);
 #endif
 #define d_sign(a, b) (b >= 0 ? fabs(a) : -fabs(a))    /* Copy sign */
 #define i_dnnt(a) \

@@ -35,7 +35,7 @@ at the top-level directory.
  * Arguments
  * =========
  *
- * ncols    (input) int
+ * ncols    (input) long long
  *          The number of columns of matrices A, L and U.
  *
  * A        (input) SuperMatrix*
@@ -56,7 +56,7 @@ at the top-level directory.
  */
 
 float
-cPivotGrowth(int ncols, SuperMatrix *A, int *perm_c, 
+cPivotGrowth(long long ncols, SuperMatrix *A, long long *perm_c, 
              SuperMatrix *L, SuperMatrix *U)
 {
 
@@ -64,9 +64,9 @@ cPivotGrowth(int ncols, SuperMatrix *A, int *perm_c,
     SCformat *Lstore;
     NCformat *Ustore;
     complex  *Aval, *Lval, *Uval;
-    int      fsupc, nsupr, luptr, nz_in_U;
-    int      i, j, k, oldcol;
-    int      *inv_perm_c;
+    long long      fsupc, nsupr, luptr, nz_in_U;
+    long long      i, j, k, oldcol;
+    long long      *inv_perm_c;
     float   rpg, maxaj, maxuj;
     float   smlnum;
     complex   *luval;
@@ -83,7 +83,7 @@ cPivotGrowth(int ncols, SuperMatrix *A, int *perm_c,
     Lval = Lstore->nzval;
     Uval = Ustore->nzval;
     
-    inv_perm_c = (int *) SUPERLU_MALLOC(A->ncol*sizeof(int));
+    inv_perm_c = (long long *) SUPERLU_MALLOC(A->ncol*sizeof(long long));
     for (j = 0; j < A->ncol; ++j) inv_perm_c[perm_c[j]] = j;
 
     for (k = 0; k <= Lstore->nsuper; ++k) {

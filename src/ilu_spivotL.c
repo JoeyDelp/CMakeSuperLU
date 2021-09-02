@@ -52,19 +52,19 @@ at the top-level directory.
  * </pre>
  */
 
-int
+long long
 ilu_spivotL(
-	const int  jcol,     /* in */
+	const long long  jcol,     /* in */
 	const double u,      /* in - diagonal pivoting threshold */
-	int	   *usepr,   /* re-use the pivot sequence given by
+	long long	   *usepr,   /* re-use the pivot sequence given by
 			      * perm_r/iperm_r */
-	int	   *perm_r,  /* may be modified */
-	int	   diagind,  /* diagonal of Pc*A*Pc' */
-	int	   *swap,    /* in/out record the row permutation */
-	int	   *iswap,   /* in/out inverse of swap, it is the same as
+	long long	   *perm_r,  /* may be modified */
+	long long	   diagind,  /* diagonal of Pc*A*Pc' */
+	long long	   *swap,    /* in/out record the row permutation */
+	long long	   *iswap,   /* in/out inverse of swap, it is the same as
 				perm_r after the factorization */
-	int	   *marker,  /* in */
-	int	   *pivrow,  /* in/out, as an input if *usepr!=0 */
+	long long	   *marker,  /* in */
+	long long	   *pivrow,  /* in/out, as an input if *usepr!=0 */
 	double	   fill_tol, /* in - fill tolerance of current column
 			      * used for a singular column */
 	milu_t	   milu,     /* in */
@@ -75,25 +75,25 @@ ilu_spivotL(
        )
 {
 
-    int		 n;	 /* number of columns */
-    int		 fsupc;  /* first column in the supernode */
-    int		 nsupc;  /* no of columns in the supernode */
-    int		 nsupr;  /* no of rows in the supernode */
-    int		 lptr;	 /* points to the starting subscript of the supernode */
-    register int	 pivptr;
-    int		 old_pivptr, diag, ptr0;
+    long long		 n;	 /* number of columns */
+    long long		 fsupc;  /* first column in the supernode */
+    long long		 nsupc;  /* no of columns in the supernode */
+    long long		 nsupr;  /* no of rows in the supernode */
+    long long		 lptr;	 /* points to the starting subscript of the supernode */
+    register long long	 pivptr;
+    long long		 old_pivptr, diag, ptr0;
     register float  pivmax, rtemp;
     float	 thresh;
     float	 temp;
     float	 *lu_sup_ptr;
     float	 *lu_col_ptr;
-    int		 *lsub_ptr;
-    register int	 isub, icol, k, itemp;
-    int		 *lsub, *xlsub;
+    long long		 *lsub_ptr;
+    register long long	 isub, icol, k, itemp;
+    long long		 *lsub, *xlsub;
     float	 *lusup;
-    int		 *xlusup;
+    long long		 *xlusup;
     flops_t	 *ops = stat->ops;
-    int		 info;
+    long long		 info;
 
     /* Initialize pointers */
     n	       = Glu->n;
@@ -241,7 +241,7 @@ ilu_spivotL(
     /* Record pivot row */
     perm_r[*pivrow] = jcol;
     if (jcol < n - 1) {
-	register int t1, t2, t;
+	register long long t1, t2, t;
 	t1 = iswap[*pivrow]; t2 = jcol;
 	if (t1 != t2) {
 	    t = swap[t1]; swap[t1] = swap[t2]; swap[t2] = t;

@@ -21,19 +21,19 @@ at the top-level directory.
 
 #include "superlu/slu_zdefs.h"
 
-int zfill_diag(int n, NCformat *Astore)
+long long zfill_diag(long long n, NCformat *Astore)
 /* fill explicit zeros on the diagonal entries, so that the matrix is not
    structurally singular. */
 {
     doublecomplex *nzval = (doublecomplex *)Astore->nzval;
-    int *rowind = Astore->rowind;
-    int *colptr = Astore->colptr;
-    int nnz = colptr[n];
-    int fill = 0;
+    long long *rowind = Astore->rowind;
+    long long *colptr = Astore->colptr;
+    long long nnz = colptr[n];
+    long long fill = 0;
     doublecomplex *nzval_new;
     doublecomplex zero = {0.0, 0.0};
-    int *rowind_new;
-    int i, j, diag;
+    long long *rowind_new;
+    long long i, j, diag;
 
     for (i = 0; i < n; i++)
     {
@@ -72,17 +72,17 @@ int zfill_diag(int n, NCformat *Astore)
     return fill;
 }
 
-int zdominate(int n, NCformat *Astore)
+long long zdominate(long long n, NCformat *Astore)
 /* make the matrix diagonally dominant */
 {
     doublecomplex *nzval = (doublecomplex *)Astore->nzval;
-    int *rowind = Astore->rowind;
-    int *colptr = Astore->colptr;
-    int nnz = colptr[n];
-    int fill = 0;
+    long long *rowind = Astore->rowind;
+    long long *colptr = Astore->colptr;
+    long long nnz = colptr[n];
+    long long fill = 0;
     doublecomplex *nzval_new;
-    int *rowind_new;
-    int i, j, diag;
+    long long *rowind_new;
+    long long i, j, diag;
     double s;
 
     for (i = 0; i < n; i++)

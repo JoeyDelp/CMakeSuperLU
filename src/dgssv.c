@@ -75,7 +75,7 @@ at the top-level directory.
  *         Stype = SLU_NC or SLU_NR; Dtype = SLU_D; Mtype = SLU_GE.
  *         In the future, more general A may be handled.
  *
- * perm_c  (input/output) int*
+ * perm_c  (input/output) long long*
  *         If A->Stype = SLU_NC, column permutation vector of size A->ncol
  *         which defines the permutation matrix Pc; perm_c[i] = j means 
  *         column i of A is in position j in A*Pc.
@@ -91,7 +91,7 @@ at the top-level directory.
  *            is already in postorder.
  *         Otherwise, it is an output argument.
  * 
- * perm_r  (input/output) int*
+ * perm_r  (input/output) long long*
  *         If A->Stype = SLU_NC, row permutation vector of size A->nrow, 
  *         which defines the permutation matrix Pr, and is determined 
  *         by partial pivoting.  perm_r[i] = j means row i of A is in 
@@ -128,7 +128,7 @@ at the top-level directory.
  *        Record the statistics on runtime and floating-point operation count.
  *        See util.h for the definition of 'SuperLUStat_t'.
  *
- * info    (output) int*
+ * info    (output) long long*
  *	   = 0: successful exit
  *         > 0: if info = i, and i is
  *             <= A->ncol: U(i,i) is exactly zero. The factorization has
@@ -140,21 +140,21 @@ at the top-level directory.
  */
 
 void
-dgssv(superlu_options_t *options, SuperMatrix *A, int *perm_c, int *perm_r,
+dgssv(superlu_options_t *options, SuperMatrix *A, long long *perm_c, long long *perm_r,
       SuperMatrix *L, SuperMatrix *U, SuperMatrix *B,
-      SuperLUStat_t *stat, int *info )
+      SuperLUStat_t *stat, long long *info )
 {
 
     DNformat *Bstore;
     SuperMatrix *AA;/* A in SLU_NC format used by the factorization routine.*/
     SuperMatrix AC; /* Matrix postmultiplied by Pc */
-    int      lwork = 0, *etree, i;
+    long long      lwork = 0, *etree, i;
     GlobalLU_t Glu; /* Not needed on return. */
     
     /* Set default values for some parameters */
-    int      panel_size;     /* panel size */
-    int      relax;          /* no of columns in a relaxed snodes */
-    int      permc_spec;
+    long long      panel_size;     /* panel size */
+    long long      relax;          /* no of columns in a relaxed snodes */
+    long long      permc_spec;
     trans_t  trans = NOTRANS;
     double   *utime;
     double   t;	/* Temporary time */

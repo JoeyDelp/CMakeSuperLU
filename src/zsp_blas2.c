@@ -78,13 +78,13 @@ at the top-level directory.
  *             element right-hand side vector b. On exit, X is overwritten 
  *             with the solution vector x.
  *
- *   info    - (output) int*
+ *   info    - (output) long long*
  *             If *info = -i, the i-th argument had an illegal value.
  * </pre>
  */
-int
+long long
 sp_ztrsv(char *uplo, char *trans, char *diag, SuperMatrix *L, 
-         SuperMatrix *U, doublecomplex *x, SuperLUStat_t *stat, int *info)
+         SuperMatrix *U, doublecomplex *x, SuperLUStat_t *stat, long long *info)
 {
 #ifdef _CRAY
     _fcd ftcs1 = _cptofcd("L", strlen("L")),
@@ -94,13 +94,13 @@ sp_ztrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
     SCformat *Lstore;
     NCformat *Ustore;
     doublecomplex   *Lval, *Uval;
-    int incx = 1, incy = 1;
+    long long incx = 1, incy = 1;
     doublecomplex temp;
     doublecomplex alpha = {1.0, 0.0}, beta = {1.0, 0.0};
     doublecomplex comp_zero = {0.0, 0.0};
-    int nrow;
-    int fsupc, nsupr, nsupc, luptr, istart, irow;
-    int i, k, iptr, jcol;
+    long long nrow;
+    long long fsupc, nsupr, nsupc, luptr, istart, irow;
+    long long i, k, iptr, jcol;
     doublecomplex *work;
     flops_t solve_ops;
 
@@ -435,7 +435,7 @@ sp_ztrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
  *            Before entry, the incremented array X must contain the   
  *            vector x.   
  * 
- *   INCX   - (input) int
+ *   INCX   - (input) long long
  *            On entry, INCX specifies the increment for the elements of   
  *            X. INCX must not be zero.   
  *
@@ -451,26 +451,26 @@ sp_ztrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
  *            must contain the vector y. On exit, Y is overwritten by the 
  *            updated vector y.
  *	      
- *   INCY   - (input) int
+ *   INCY   - (input) long long
  *            On entry, INCY specifies the increment for the elements of   
  *            Y. INCY must not be zero.   
  *
  *    ==== Sparse Level 2 Blas routine.   
  * </pre>
 */
-int
+long long
 sp_zgemv(char *trans, doublecomplex alpha, SuperMatrix *A, doublecomplex *x, 
-	 int incx, doublecomplex beta, doublecomplex *y, int incy)
+	 long long incx, doublecomplex beta, doublecomplex *y, long long incy)
 {
 
     /* Local variables */
     NCformat *Astore;
     doublecomplex   *Aval;
-    int info;
+    long long info;
     doublecomplex temp, temp1;
-    int lenx, leny, i, j, irow;
-    int iy, jx, jy, kx, ky;
-    int notran;
+    long long lenx, leny, i, j, irow;
+    long long iy, jx, jy, kx, ky;
+    long long notran;
     doublecomplex comp_zero = {0.0, 0.0};
     doublecomplex comp_one = {1.0, 0.0};
 

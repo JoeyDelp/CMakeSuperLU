@@ -80,7 +80,7 @@ at the top-level directory.
  *           close to overflow or very close to underflow, the matrix   
  *           should be scaled.
  *	    
- *   INFO    (output) int*
+ *   INFO    (output) long long*
  *           = 0:  successful exit   
  *           < 0:  if INFO = -i, the i-th argument had an illegal value   
  *           > 0:  if INFO = i,  and i is   
@@ -92,14 +92,14 @@ at the top-level directory.
  */
 void
 sgsequ(SuperMatrix *A, float *r, float *c, float *rowcnd,
-	float *colcnd, float *amax, int *info)
+	float *colcnd, float *amax, long long *info)
 {
 
 
     /* Local variables */
     NCformat *Astore;
     float   *Aval;
-    int i, j, irow;
+    long long i, j, irow;
     float rcmin, rcmax;
     float bignum, smlnum;
     extern float smach(char *);

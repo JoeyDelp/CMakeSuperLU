@@ -39,7 +39,7 @@ at the top-level directory.
 /* 
  *  Implementation of disjoint set union routines.
  *  Elements are integers in 0..n-1, and the 
- *  names of the sets themselves are of type int.
+ *  names of the sets themselves are of type long long.
  *  
  *  Calls are:
  *  initialize_disjoint_sets (n) initial call.
@@ -57,12 +57,12 @@ at the top-level directory.
 
 
 static 
-int *mxCallocInt(int n)
+long long *mxCallocInt(long long n)
 {
-    register int i;
-    int *buf;
+    register long long i;
+    long long *buf;
 
-    buf = (int *) SUPERLU_MALLOC( n * sizeof(int) );
+    buf = (long long *) SUPERLU_MALLOC( n * sizeof(long long) );
     if ( !buf ) {
          ABORT("SUPERLU_MALLOC fails for buf in mxCallocInt()");
        }
@@ -72,8 +72,8 @@ int *mxCallocInt(int n)
       
 static
 void initialize_disjoint_sets (
-			       int n,
-			       int **pp
+			       long long n,
+			       long long **pp
 			       )
 {
 	(*pp) = mxCallocInt(n);
@@ -81,9 +81,9 @@ void initialize_disjoint_sets (
 
 
 static
-int make_set (
-	      int i,
-	      int *pp
+long long make_set (
+	      long long i,
+	      long long *pp
 	      )
 {
 	pp[i] = i;
@@ -92,10 +92,10 @@ int make_set (
 
 
 static
-int link (
-	  int s,
-	  int t,
-	  int *pp
+long long link (
+	  long long s,
+	  long long t,
+	  long long *pp
 	  )
 {
 	pp[s] = t;
@@ -105,12 +105,12 @@ int link (
 
 /* PATH HALVING */
 static
-int find (
-	  int i,
-	  int *pp
+long long find (
+	  long long i,
+	  long long *pp
 	  )
 {
-    register int p, gp;
+    register long long p, gp;
     
     p = pp[i];
     gp = pp[p];
@@ -126,8 +126,8 @@ int find (
 #if 0
 /* PATH COMPRESSION */
 static
-int find (
-	int i
+long long find (
+	long long i
 	)
 {
 	if (pp[i] != i) 
@@ -138,7 +138,7 @@ int find (
 
 static
 void finalize_disjoint_sets (
-			     int *pp
+			     long long *pp
 			     )
 {
 	SUPERLU_FREE(pp);
@@ -165,21 +165,21 @@ void finalize_disjoint_sets (
 /*
  * Nonsymmetric elimination tree
  */
-int
+long long
 sp_coletree(
-	    int *acolst, int *acolend, /* column start and end past 1 */
-	    int *arow,                 /* row indices of A */
-	    int nr, int nc,            /* dimension of A */
-	    int *parent	               /* parent in elim tree */
+	    long long *acolst, long long *acolend, /* column start and end past 1 */
+	    long long *arow,                 /* row indices of A */
+	    long long nr, long long nc,            /* dimension of A */
+	    long long *parent	               /* parent in elim tree */
 	    )
 {
-	int	*root;			/* root of subtee of etree 	*/
-	int     *firstcol;		/* first nonzero col in each row*/
-	int	rset, cset;             
-	int	row, col;
-	int	rroot;
-	int	p;
-	int     *pp;
+	long long	*root;			/* root of subtee of etree 	*/
+	long long     *firstcol;		/* first nonzero col in each row*/
+	long long	rset, cset;             
+	long long	row, col;
+	long long	rroot;
+	long long	p;
+	long long     *pp;
 
 	root = mxCallocInt (nc);
 	initialize_disjoint_sets (nc, &pp);
@@ -251,14 +251,14 @@ static
  * Depth-first search from vertex v.
  */
 void etdfs (
-	    int	  v,
-	    int   first_kid[],
-	    int   next_kid[],
-	    int   post[], 
-	    int   *postnum
+	    long long	  v,
+	    long long   first_kid[],
+	    long long   next_kid[],
+	    long long   post[], 
+	    long long   *postnum
 	    )
 {
-	int	w;
+	long long	w;
 
 	for (w = first_kid[v]; w != -1; w = next_kid[w]) {
 		etdfs (w, first_kid, next_kid, post, postnum);
@@ -273,11 +273,11 @@ static
  * Depth-first search from vertex n.  No recursion.
  * This routine was contributed by Cédric Doucet, CEDRAT Group, Meylan, France.
  */
-void nr_etdfs (int n, int *parent,
-	       int *first_kid, int *next_kid,
-	       int *post, int postnum)
+void nr_etdfs (long long n, long long *parent,
+	       long long *first_kid, long long *next_kid,
+	       long long *post, long long postnum)
 {
-    int current = n, first, next;
+    long long current = n, first, next;
 
     while (postnum != n){
      
@@ -321,14 +321,14 @@ void nr_etdfs (int n, int *parent,
 /*
  * Post order a tree
  */
-int *TreePostorder(
-		   int n,
-		   int *parent
+long long *TreePostorder(
+		   long long n,
+		   long long *parent
 		   )
 {
-        int	*first_kid, *next_kid;	/* Linked list of children.	*/
-        int	*post, postnum;
-	int	v, dad;
+        long long	*first_kid, *next_kid;	/* Linked list of children.	*/
+        long long	*post, postnum;
+	long long	v, dad;
 
 	/* Allocate storage for working arrays and results	*/
 	first_kid = 	mxCallocInt (n+1);
@@ -389,20 +389,20 @@ int *TreePostorder(
 /*
  * Symmetric elimination tree
  */
-int
+long long
 sp_symetree(
-	    int *acolst, int *acolend, /* column starts and ends past 1 */
-	    int *arow,            /* row indices of A */
-	    int n,                /* dimension of A */
-	    int *parent	    /* parent in elim tree */
+	    long long *acolst, long long *acolend, /* column starts and ends past 1 */
+	    long long *arow,            /* row indices of A */
+	    long long n,                /* dimension of A */
+	    long long *parent	    /* parent in elim tree */
 	    )
 {
-	int	*root;		    /* root of subtree of etree 	*/
-	int	rset, cset;             
-	int	row, col;
-	int	rroot;
-	int	p;
-	int     *pp;
+	long long	*root;		    /* root of subtree of etree 	*/
+	long long	rset, cset;             
+	long long	row, col;
+	long long	rroot;
+	long long	p;
+	long long     *pp;
 
 	root = mxCallocInt (n);
 	initialize_disjoint_sets (n, &pp);

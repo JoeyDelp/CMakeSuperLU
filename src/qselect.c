@@ -21,9 +21,9 @@ at the top-level directory.
 
 #include "superlu/slu_ddefs.h"
 
-double dqselect(int n, double A[], int k)
+double dqselect(long long n, double A[], long long k)
 {
-    register int i, j, p;
+    register long long i, j, p;
     register double val;
 
     k = SUPERLU_MAX(k, 0);
@@ -52,9 +52,9 @@ double dqselect(int n, double A[], int k)
     return A[0];
 }
 
-float sqselect(int n, float A[], int k)
+float sqselect(long long n, float A[], long long k)
 {
-    register int i, j, p;
+    register long long i, j, p;
     register float val;
 
     k = SUPERLU_MAX(k, 0);

@@ -32,15 +32,15 @@ at the top-level directory.
  */
 
 void
-dreadMM(FILE *fp, int *m, int *n, int *nonz,
-	    double **nzval, int **rowind, int **colptr)
+dreadMM(FILE *fp, long long *m, long long *n, long long *nonz,
+	    double **nzval, long long **rowind, long long **colptr)
 {
     int_t    j, k, jsize, nnz, nz, new_nonz;
     double *a, *val;
     int_t    *asub, *xa, *row, *col;
     int_t    zero_base = 0;
     char *p, line[512], banner[64], mtx[64], crd[64], arith[64], sym[64];
-    int expand;
+    long long expand;
 
     /* 	File format:
      *    %%MatrixMarket matrix coordinate real general/symmetric/...
@@ -212,7 +212,7 @@ dreadMM(FILE *fp, int *m, int *n, int *nonz,
     SUPERLU_FREE(col);
 
 #ifdef CHK_INPUT
-    int i;
+    long long i;
     for (i = 0; i < *n; i++) {
 	printf("Col %d, xa %d\n", i, xa[i]);
 	for (k = xa[i]; k < xa[i+1]; k++)
@@ -223,10 +223,10 @@ dreadMM(FILE *fp, int *m, int *n, int *nonz,
 }
 
 
-static void dreadrhs(int m, double *b)
+static void dreadrhs(long long m, double *b)
 {
     FILE *fp, *fopen();
-    int i;
+    long long i;
 
     if ( !(fp = fopen("b.dat", "r")) ) {
         fprintf(stderr, "dreadrhs: file does not exist\n");

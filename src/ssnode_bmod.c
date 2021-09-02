@@ -37,11 +37,11 @@ at the top-level directory.
 
 /*! \brief Performs numeric block updates within the relaxed snode. 
  */
-int
+long long
 ssnode_bmod (
-	    const int  jcol,	  /* in */
-	    const int  jsupno,    /* in */
-	    const int  fsupc,     /* in */
+	    const long long  jcol,	  /* in */
+	    const long long  jsupno,    /* in */
+	    const long long  fsupc,     /* in */
 	    float     *dense,    /* in */
 	    float     *tempv,    /* working array */
 	    GlobalLU_t *Glu,      /* modified */
@@ -54,16 +54,16 @@ ssnode_bmod (
 	 ftcs2 = _cptofcd("N", strlen("N")),
 	 ftcs3 = _cptofcd("U", strlen("U"));
 #endif
-    int            incx = 1, incy = 1;
+    long long            incx = 1, incy = 1;
     float         alpha = -1.0, beta = 1.0;
 #endif
 
-    int            luptr, nsupc, nsupr, nrow;
-    int            isub, irow, i, iptr; 
-    register int   ufirst, nextlu;
-    int            *lsub, *xlsub;
+    long long            luptr, nsupc, nsupr, nrow;
+    long long            isub, irow, i, iptr; 
+    register long long   ufirst, nextlu;
+    long long            *lsub, *xlsub;
     float         *lusup;
-    int            *xlusup;
+    long long            *xlusup;
     flops_t *ops = stat->ops;
 
     lsub    = Glu->lsub;

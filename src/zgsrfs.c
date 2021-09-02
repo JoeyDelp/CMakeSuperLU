@@ -68,12 +68,12 @@ at the top-level directory.
  *           zgstrf(). Use column-wise storage scheme, 
  *           i.e., U has types: Stype = SLU_NC, Dtype = SLU_Z, Mtype = SLU_TRU.
  *
- *   perm_c  (input) int*, dimension (A->ncol)
+ *   perm_c  (input) long long*, dimension (A->ncol)
  *	     Column permutation vector, which defines the 
  *           permutation matrix Pc; perm_c[i] = j means column i of A is 
  *           in position j in A*Pc.
  *
- *   perm_r  (input) int*, dimension (A->nrow)
+ *   perm_r  (input) long long*, dimension (A->nrow)
  *           Row permutation vector, which defines the permutation matrix Pr;
  *           perm_r[i] = j means row i of A is in position j in Pr*A.
  *
@@ -126,7 +126,7 @@ at the top-level directory.
  *            Record the statistics on runtime and floating-point operation count.
  *            See util.h for the definition of 'SuperLUStat_t'.
  *
- *   info    (output) int*   
+ *   info    (output) long long*   
  *           = 0:  successful exit   
  *            < 0:  if INFO = -i, the i-th argument had an illegal value   
  *
@@ -139,16 +139,16 @@ at the top-level directory.
  */
 void
 zgsrfs(trans_t trans, SuperMatrix *A, SuperMatrix *L, SuperMatrix *U,
-       int *perm_c, int *perm_r, char *equed, double *R, double *C,
+       long long *perm_c, long long *perm_r, char *equed, double *R, double *C,
        SuperMatrix *B, SuperMatrix *X, double *ferr, double *berr,
-       SuperLUStat_t *stat, int *info)
+       SuperLUStat_t *stat, long long *info)
 {
 
 
 #define ITMAX 5
     
     /* Table of constant values */
-    int    ione = 1;
+    long long    ione = 1;
     doublecomplex ndone = {-1., 0.};
     doublecomplex done = {1., 0.};
     
@@ -158,25 +158,25 @@ zgsrfs(trans_t trans, SuperMatrix *A, SuperMatrix *L, SuperMatrix *U,
     SuperMatrix Bjcol;
     DNformat *Bstore, *Xstore, *Bjcol_store;
     doublecomplex   *Bmat, *Xmat, *Bptr, *Xptr;
-    int      kase;
+    long long      kase;
     double   safe1, safe2;
-    int      i, j, k, irow, nz, count, notran, rowequ, colequ;
-    int      ldb, ldx, nrhs;
+    long long      i, j, k, irow, nz, count, notran, rowequ, colequ;
+    long long      ldb, ldx, nrhs;
     double   s, xk, lstres, eps, safmin;
     char     transc[1];
     trans_t  transt;
     doublecomplex   *work;
     double   *rwork;
-    int      *iwork;
-    int      isave[3];
+    long long      *iwork;
+    long long      isave[3];
 
-    extern int zlacon2_(int *, doublecomplex *, doublecomplex *, double *, int *, int []);
+    extern long long zlacon2_(long long *, doublecomplex *, doublecomplex *, double *, long long *, long long []);
 #ifdef _CRAY
-    extern int CCOPY(int *, doublecomplex *, int *, doublecomplex *, int *);
-    extern int CSAXPY(int *, doublecomplex *, doublecomplex *, int *, doublecomplex *, int *);
+    extern long long CCOPY(long long *, doublecomplex *, long long *, doublecomplex *, long long *);
+    extern long long CSAXPY(long long *, doublecomplex *, doublecomplex *, long long *, doublecomplex *, long long *);
 #else
-    extern int zcopy_(int *, doublecomplex *, int *, doublecomplex *, int *);
-    extern int zaxpy_(int *, doublecomplex *, doublecomplex *, int *, doublecomplex *, int *);
+    extern long long zcopy_(long long *, doublecomplex *, long long *, doublecomplex *, long long *);
+    extern long long zaxpy_(long long *, doublecomplex *, doublecomplex *, long long *, doublecomplex *, long long *);
 #endif
 
     Astore = A->Store;

@@ -36,8 +36,8 @@ at the top-level directory.
 #include "superlu/slu_ddefs.h"
 
 void
-dCreate_CompCol_Matrix(SuperMatrix *A, int m, int n, int nnz, 
-		       double *nzval, int *rowind, int *colptr,
+dCreate_CompCol_Matrix(SuperMatrix *A, long long m, long long n, long long nnz, 
+		       double *nzval, long long *rowind, long long *colptr,
 		       Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     NCformat *Astore;
@@ -57,8 +57,8 @@ dCreate_CompCol_Matrix(SuperMatrix *A, int m, int n, int nnz,
 }
 
 void
-dCreate_CompRow_Matrix(SuperMatrix *A, int m, int n, int nnz, 
-		       double *nzval, int *colind, int *rowptr,
+dCreate_CompRow_Matrix(SuperMatrix *A, long long m, long long n, long long nnz, 
+		       double *nzval, long long *colind, long long *rowptr,
 		       Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     NRformat *Astore;
@@ -82,7 +82,7 @@ void
 dCopy_CompCol_Matrix(SuperMatrix *A, SuperMatrix *B)
 {
     NCformat *Astore, *Bstore;
-    int      ncol, nnz, i;
+    long long      ncol, nnz, i;
 
     B->Stype = A->Stype;
     B->Dtype = A->Dtype;
@@ -100,7 +100,7 @@ dCopy_CompCol_Matrix(SuperMatrix *A, SuperMatrix *B)
 
 
 void
-dCreate_Dense_Matrix(SuperMatrix *X, int m, int n, double *x, int ldx,
+dCreate_Dense_Matrix(SuperMatrix *X, long long m, long long n, double *x, long long ldx,
 		    Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     DNformat    *Xstore;
@@ -118,12 +118,12 @@ dCreate_Dense_Matrix(SuperMatrix *X, int m, int n, double *x, int ldx,
 }
 
 void
-dCopy_Dense_Matrix(int M, int N, double *X, int ldx,
-			double *Y, int ldy)
+dCopy_Dense_Matrix(long long M, long long N, double *X, long long ldx,
+			double *Y, long long ldy)
 {
 /*! \brief Copies a two-dimensional matrix X to another matrix Y.
  */
-    int    i, j;
+    long long    i, j;
     
     for (j = 0; j < N; ++j)
         for (i = 0; i < M; ++i)
@@ -131,9 +131,9 @@ dCopy_Dense_Matrix(int M, int N, double *X, int ldx,
 }
 
 void
-dCreate_SuperNode_Matrix(SuperMatrix *L, int m, int n, int nnz, 
-			double *nzval, int *nzval_colptr, int *rowind,
-			int *rowind_colptr, int *col_to_sup, int *sup_to_col,
+dCreate_SuperNode_Matrix(SuperMatrix *L, long long m, long long n, long long nnz, 
+			double *nzval, long long *nzval_colptr, long long *rowind,
+			long long *rowind_colptr, long long *col_to_sup, long long *sup_to_col,
 			Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     SCformat *Lstore;
@@ -161,18 +161,18 @@ dCreate_SuperNode_Matrix(SuperMatrix *L, int m, int n, int nnz,
 /*! \brief Convert a row compressed storage into a column compressed storage.
  */
 void
-dCompRow_to_CompCol(int m, int n, int nnz, 
-		    double *a, int *colind, int *rowptr,
-		    double **at, int **rowind, int **colptr)
+dCompRow_to_CompCol(long long m, long long n, long long nnz, 
+		    double *a, long long *colind, long long *rowptr,
+		    double **at, long long **rowind, long long **colptr)
 {
-    register int i, j, col, relpos;
-    int *marker;
+    register long long i, j, col, relpos;
+    long long *marker;
 
     /* Allocate storage for another copy of the matrix. */
     *at = (double *) doubleMalloc(nnz);
-    *rowind = (int *) intMalloc(nnz);
-    *colptr = (int *) intMalloc(n+1);
-    marker = (int *) intCalloc(n);
+    *rowind = (long long *) intMalloc(nnz);
+    *colptr = (long long *) intMalloc(n+1);
+    marker = (long long *) intCalloc(n);
     
     /* Get counts of each column of A, and set up column pointers */
     for (i = 0; i < m; ++i)
@@ -202,7 +202,7 @@ void
 dPrint_CompCol_Matrix(char *what, SuperMatrix *A)
 {
     NCformat     *Astore;
-    register int i,n;
+    register long long i,n;
     double       *dp;
     
     printf("\nCompCol matrix %s:\n", what);
@@ -225,9 +225,9 @@ void
 dPrint_SuperNode_Matrix(char *what, SuperMatrix *A)
 {
     SCformat     *Astore;
-    register int i, j, k, c, d, n, nsup;
+    register long long i, j, k, c, d, n, nsup;
     double       *dp;
-    int *col_to_sup, *sup_to_col, *rowind, *rowind_colptr;
+    long long *col_to_sup, *sup_to_col, *rowind, *rowind_colptr;
     
     printf("\nSuperNode matrix %s:\n", what);
     printf("Stype %d, Dtype %d, Mtype %d\n", A->Stype,A->Dtype,A->Mtype);
@@ -274,7 +274,7 @@ void
 dPrint_Dense_Matrix(char *what, SuperMatrix *A)
 {
     DNformat     *Astore = (DNformat *) A->Store;
-    register int i, j, lda = Astore->lda;
+    register long long i, j, lda = Astore->lda;
     double       *dp;
     
     printf("\nDense matrix %s:\n", what);
@@ -293,15 +293,15 @@ dPrint_Dense_Matrix(char *what, SuperMatrix *A)
 /*! \brief Diagnostic print of column "jcol" in the U/L factor.
  */
 void
-dprint_lu_col(char *msg, int jcol, int pivrow, int *xprune, GlobalLU_t *Glu)
+dprint_lu_col(char *msg, long long jcol, long long pivrow, long long *xprune, GlobalLU_t *Glu)
 {
-    int     i, k, fsupc;
-    int     *xsup, *supno;
-    int     *xlsub, *lsub;
+    long long     i, k, fsupc;
+    long long     *xsup, *supno;
+    long long     *xlsub, *lsub;
     double  *lusup;
-    int     *xlusup;
+    long long     *xlusup;
     double  *ucol;
-    int     *usub, *xusub;
+    long long     *usub, *xusub;
 
     xsup    = Glu->xsup;
     supno   = Glu->supno;
@@ -334,9 +334,9 @@ dprint_lu_col(char *msg, int jcol, int pivrow, int *xprune, GlobalLU_t *Glu)
 
 /*! \brief Check whether tempv[] == 0. This should be true before and after calling any numeric routines, i.e., "panel_bmod" and "column_bmod". 
  */
-void dcheck_tempv(int n, double *tempv)
+void dcheck_tempv(long long n, double *tempv)
 {
-    int i;
+    long long i;
 	
     for (i = 0; i < n; i++) {
 	if (tempv[i] != 0.0) 
@@ -349,9 +349,9 @@ void dcheck_tempv(int n, double *tempv)
 
 
 void
-dGenXtrue(int n, int nrhs, double *x, int ldx)
+dGenXtrue(long long n, long long nrhs, double *x, long long ldx)
 {
-    int  i, j;
+    long long  i, j;
     for (j = 0; j < nrhs; ++j)
 	for (i = 0; i < n; ++i) {
 	    x[i + j*ldx] = 1.0;/* + (double)(i+1.)/n;*/
@@ -361,7 +361,7 @@ dGenXtrue(int n, int nrhs, double *x, int ldx)
 /*! \brief Let rhs[i] = sum of i-th row of A, so the solution vector is all 1's
  */
 void
-dFillRHS(trans_t trans, int nrhs, double *x, int ldx,
+dFillRHS(trans_t trans, long long nrhs, double *x, long long ldx,
          SuperMatrix *A, SuperMatrix *B)
 {
     NCformat *Astore;
@@ -370,7 +370,7 @@ dFillRHS(trans_t trans, int nrhs, double *x, int ldx,
     double   *rhs;
     double one = 1.0;
     double zero = 0.0;
-    int      ldc;
+    long long      ldc;
     char transc[1];
 
     Astore = A->Store;
@@ -390,9 +390,9 @@ dFillRHS(trans_t trans, int nrhs, double *x, int ldx,
 /*! \brief Fills a double precision array with a given value.
  */
 void 
-dfill(double *a, int alen, double dval)
+dfill(double *a, long long alen, double dval)
 {
-    register int i;
+    register long long i;
     for (i = 0; i < alen; i++) a[i] = dval;
 }
 
@@ -400,12 +400,12 @@ dfill(double *a, int alen, double dval)
 
 /*! \brief Check the inf-norm of the error vector 
  */
-void dinf_norm_error(int nrhs, SuperMatrix *X, double *xtrue)
+void dinf_norm_error(long long nrhs, SuperMatrix *X, double *xtrue)
 {
     DNformat *Xstore;
     double err, xnorm;
     double *Xmat, *soln_work;
-    int i, j;
+    long long i, j;
 
     Xstore = X->Store;
     Xmat = Xstore->nzval;
@@ -470,10 +470,10 @@ dPrintPerf(SuperMatrix *L, SuperMatrix *U, mem_usage_t *mem_usage,
 
 
 
-int
-print_double_vec(char *what, int n, double *vec)
+long long
+print_double_vec(char *what, long long n, double *vec)
 {
-    int i;
+    long long i;
     printf("%s: n %d\n", what, n);
     for (i = 0; i < n; ++i) printf("%d\t%f\n", i, vec[i]);
     return 0;

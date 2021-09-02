@@ -167,9 +167,9 @@ Destroy_Dense_Matrix(SuperMatrix *A)
 /*! \brief Reset repfnz[] for the current column 
  */
 void
-resetrep_col (const int nseg, const int *segrep, int *repfnz)
+resetrep_col (const long long nseg, const long long *segrep, long long *repfnz)
 {
-    int i, irep;
+    long long i, irep;
     
     for (i = 0; i < nseg; i++) {
 	irep = segrep[i];
@@ -181,11 +181,11 @@ resetrep_col (const int nseg, const int *segrep, int *repfnz)
 /*! \brief Count the total number of nonzeros in factors L and U,  and in the symmetrically reduced L. 
  */
 void
-countnz(const int n, int *xprune, int *nnzL, int *nnzU, GlobalLU_t *Glu)
+countnz(const long long n, long long *xprune, long long *nnzL, long long *nnzU, GlobalLU_t *Glu)
 {
-    int          nsuper, fsupc, i, j;
-    int          nnzL0, jlen, irep;
-    int          *xsup, *xlsub;
+    long long          nsuper, fsupc, i, j;
+    long long          nnzL0, jlen, irep;
+    long long          *xsup, *xlsub;
 
     xsup   = Glu->xsup;
     xlsub  = Glu->xlsub;
@@ -218,11 +218,11 @@ countnz(const int n, int *xprune, int *nnzL, int *nnzU, GlobalLU_t *Glu)
 /*! \brief Count the total number of nonzeros in factors L and U.
  */
 void
-ilu_countnz(const int n, int *nnzL, int *nnzU, GlobalLU_t *Glu)
+ilu_countnz(const long long n, long long *nnzL, long long *nnzU, GlobalLU_t *Glu)
 {
-    int          nsuper, fsupc, i, j;
-    int          jlen, irep;
-    int          *xsup, *xlsub;
+    long long          nsuper, fsupc, i, j;
+    long long          jlen, irep;
+    long long          *xsup, *xlsub;
 
     xsup   = Glu->xsup;
     xlsub  = Glu->xlsub;
@@ -252,10 +252,10 @@ ilu_countnz(const int n, int *nnzL, int *nnzU, GlobalLU_t *Glu)
 /*! \brief Fix up the data storage lsub for L-subscripts. It removes the subscript sets for structural pruning,	and applies permuation to the remaining subscripts.
  */
 void
-fixupL(const int n, const int *perm_r, GlobalLU_t *Glu)
+fixupL(const long long n, const long long *perm_r, GlobalLU_t *Glu)
 {
-    register int nsuper, fsupc, nextl, i, j, k, jstrt;
-    int          *xsup, *lsub, *xlsub;
+    register long long nsuper, fsupc, nextl, i, j, k, jstrt;
+    long long          *xsup, *lsub, *xlsub;
 
     if ( n <= 1 ) return;
 
@@ -287,10 +287,10 @@ fixupL(const int n, const int *perm_r, GlobalLU_t *Glu)
 
 /*! \brief Diagnostic print of segment info after panel_dfs().
  */
-void print_panel_seg(int n, int w, int jcol, int nseg, 
-		     int *segrep, int *repfnz)
+void print_panel_seg(long long n, long long w, long long jcol, long long nseg, 
+		     long long *segrep, long long *repfnz)
 {
-    int j, k;
+    long long j, k;
     
     for (j = jcol; j < jcol+w; j++) {
 	printf("\tcol %d:\n", j);
@@ -305,7 +305,7 @@ void print_panel_seg(int n, int w, int jcol, int nseg,
 void
 StatInit(SuperLUStat_t *stat)
 {
-    register int i, w, panel_size, relax;
+    register long long i, w, panel_size, relax;
 
     panel_size = sp_ienv(1);
     relax = sp_ienv(2);
@@ -386,9 +386,9 @@ LUSolveFlops(SuperLUStat_t *stat)
 
 /*! \brief Fills an integer array with a given value.
  */
-void ifill(int *a, int alen, int ival)
+void ifill(long long *a, long long alen, long long ival)
 {
-    register int i;
+    register long long i;
     for (i = 0; i < alen; i++) a[i] = ival;
 }
 
@@ -398,12 +398,12 @@ void ifill(int *a, int alen, int ival)
  */
 #define NBUCKS 10
 
-void super_stats(int nsuper, int *xsup)
+void super_stats(long long nsuper, long long *xsup)
 {
-    register int nsup1 = 0;
-    int    i, isize, whichb, bl, bh;
-    int    bucket[NBUCKS];
-    int    max_sup_size = 0;
+    register long long nsup1 = 0;
+    long long    i, isize, whichb, bl, bh;
+    long long    bucket[NBUCKS];
+    long long    max_sup_size = 0;
 
     for (i = 0; i <= nsuper; i++) {
 	isize = xsup[i+1] - xsup[i];
@@ -435,12 +435,12 @@ void super_stats(int nsuper, int *xsup)
 }
 
 
-float SpaSize(int n, int np, float sum_npw)
+float SpaSize(long long n, long long np, float sum_npw)
 {
     return (sum_npw*8 + np*8 + n*4)/1024.;
 }
 
-float DenseSize(int n, float sum_nw)
+float DenseSize(long long n, float sum_nw)
 {
     return (sum_nw*8 + n*8)/1024.;;
 }
@@ -449,9 +449,9 @@ float DenseSize(int n, float sum_nw)
 
 /*! \brief Check whether repfnz[] == EMPTY after reset.
  */
-void check_repfnz(int n, int w, int jcol, int *repfnz)
+void check_repfnz(long long n, long long w, long long jcol, long long *repfnz)
 {
-    int jj, k;
+    long long jj, k;
 
     for (jj = jcol; jj < jcol+w; jj++) 
 	for (k = 0; k < n; k++)
@@ -465,7 +465,7 @@ void check_repfnz(int n, int w, int jcol, int *repfnz)
 
 /*! \brief Print a summary of the testing results. */
 void
-PrintSumm(char *type, int nfail, int nrun, int nerrs)
+PrintSumm(char *type, long long nfail, long long nrun, long long nerrs)
 {
     if ( nfail > 0 )
 	printf("%3s driver: %d out of %d tests failed to pass the threshold\n",
@@ -478,17 +478,17 @@ PrintSumm(char *type, int nfail, int nrun, int nerrs)
 }
 
 
-int print_int_vec(char *what, int n, int *vec)
+long long print_int_vec(char *what, long long n, long long *vec)
 {
-    int i;
+    long long i;
     printf("%s\n", what);
     for (i = 0; i < n; ++i) printf("%d\t%d\n", i, vec[i]);
     return 0;
 }
 
-int slu_PrintInt10(char *name, int len, int *x)
+long long slu_PrintInt10(char *name, long long len, long long *x)
 {
-    register int i;
+    register long long i;
     
     printf("%10s:", name);
     for (i = 0; i < len; ++i)

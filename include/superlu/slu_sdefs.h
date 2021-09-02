@@ -84,7 +84,7 @@ at the top-level directory.
 #endif
 
 /* Define my integer type int_t */
-typedef int int_t; /* default */
+typedef long long int_t; /* default */
 
 #include <math.h>
 #include <limits.h>
@@ -105,179 +105,179 @@ extern "C" {
 
 /*! \brief Driver routines */
 extern void
-sgssv(superlu_options_t *, SuperMatrix *, int *, int *, SuperMatrix *,
-      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, int *);
+sgssv(superlu_options_t *, SuperMatrix *, long long *, long long *, SuperMatrix *,
+      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, long long *);
 extern void
-sgssvx(superlu_options_t *, SuperMatrix *, int *, int *, int *,
+sgssvx(superlu_options_t *, SuperMatrix *, long long *, long long *, long long *,
        char *, float *, float *, SuperMatrix *, SuperMatrix *,
-       void *, int, SuperMatrix *, SuperMatrix *,
+       void *, long long, SuperMatrix *, SuperMatrix *,
        float *, float *, float *, float *,
-       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, int *);
+       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, long long *);
     /* ILU */
 extern void
-sgsisv(superlu_options_t *, SuperMatrix *, int *, int *, SuperMatrix *,
-      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, int *);
+sgsisv(superlu_options_t *, SuperMatrix *, long long *, long long *, SuperMatrix *,
+      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, long long *);
 extern void
-sgsisx(superlu_options_t *, SuperMatrix *, int *, int *, int *,
+sgsisx(superlu_options_t *, SuperMatrix *, long long *, long long *, long long *,
        char *, float *, float *, SuperMatrix *, SuperMatrix *,
-       void *, int, SuperMatrix *, SuperMatrix *, float *, float *,
-       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, int *);
+       void *, long long, SuperMatrix *, SuperMatrix *, float *, float *,
+       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, long long *);
 
 
 /*! \brief Supernodal LU factor related */
 extern void
-sCreate_CompCol_Matrix(SuperMatrix *, int, int, int, float *,
-		       int *, int *, Stype_t, Dtype_t, Mtype_t);
+sCreate_CompCol_Matrix(SuperMatrix *, long long, long long, long long, float *,
+		       long long *, long long *, Stype_t, Dtype_t, Mtype_t);
 extern void
-sCreate_CompRow_Matrix(SuperMatrix *, int, int, int, float *,
-		       int *, int *, Stype_t, Dtype_t, Mtype_t);
+sCreate_CompRow_Matrix(SuperMatrix *, long long, long long, long long, float *,
+		       long long *, long long *, Stype_t, Dtype_t, Mtype_t);
 extern void
 sCopy_CompCol_Matrix(SuperMatrix *, SuperMatrix *);
 extern void
-sCreate_Dense_Matrix(SuperMatrix *, int, int, float *, int,
+sCreate_Dense_Matrix(SuperMatrix *, long long, long long, float *, long long,
 		     Stype_t, Dtype_t, Mtype_t);
 extern void
-sCreate_SuperNode_Matrix(SuperMatrix *, int, int, int, float *, 
-		         int *, int *, int *, int *, int *,
+sCreate_SuperNode_Matrix(SuperMatrix *, long long, long long, long long, float *, 
+		         long long *, long long *, long long *, long long *, long long *,
 			 Stype_t, Dtype_t, Mtype_t);
 extern void
-sCopy_Dense_Matrix(int, int, float *, int, float *, int);
+sCopy_Dense_Matrix(long long, long long, float *, long long, float *, long long);
 
-extern void    countnz (const int, int *, int *, int *, GlobalLU_t *);
-extern void    ilu_countnz (const int, int *, int *, GlobalLU_t *);
-extern void    fixupL (const int, const int *, GlobalLU_t *);
+extern void    countnz (const long long, long long *, long long *, long long *, GlobalLU_t *);
+extern void    ilu_countnz (const long long, long long *, long long *, GlobalLU_t *);
+extern void    fixupL (const long long, const long long *, GlobalLU_t *);
 
-extern void    sallocateA (int, int, float **, int **, int **);
+extern void    sallocateA (long long, long long, float **, long long **, long long **);
 extern void    sgstrf (superlu_options_t*, SuperMatrix*,
-                       int, int, int*, void *, int, int *, int *, 
+                       long long, long long, long long*, void *, long long, long long *, long long *, 
                        SuperMatrix *, SuperMatrix *, GlobalLU_t *,
-		       SuperLUStat_t*, int *);
-extern int     ssnode_dfs (const int, const int, const int *, const int *,
-			     const int *, int *, int *, GlobalLU_t *);
-extern int     ssnode_bmod (const int, const int, const int, float *,
+		       SuperLUStat_t*, long long *);
+extern long long     ssnode_dfs (const long long, const long long, const long long *, const long long *,
+			     const long long *, long long *, long long *, GlobalLU_t *);
+extern long long     ssnode_bmod (const long long, const long long, const long long, float *,
                               float *, GlobalLU_t *, SuperLUStat_t*);
-extern void    spanel_dfs (const int, const int, const int, SuperMatrix *,
-			   int *, int *, float *, int *, int *, int *,
-			   int *, int *, int *, int *, GlobalLU_t *);
-extern void    spanel_bmod (const int, const int, const int, const int,
-                           float *, float *, int *, int *,
+extern void    spanel_dfs (const long long, const long long, const long long, SuperMatrix *,
+			   long long *, long long *, float *, long long *, long long *, long long *,
+			   long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern void    spanel_bmod (const long long, const long long, const long long, const long long,
+                           float *, float *, long long *, long long *,
 			   GlobalLU_t *, SuperLUStat_t*);
-extern int     scolumn_dfs (const int, const int, int *, int *, int *, int *,
-			   int *, int *, int *, int *, int *, GlobalLU_t *);
-extern int     scolumn_bmod (const int, const int, float *,
-			   float *, int *, int *, int,
+extern long long     scolumn_dfs (const long long, const long long, long long *, long long *, long long *, long long *,
+			   long long *, long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern long long     scolumn_bmod (const long long, const long long, float *,
+			   float *, long long *, long long *, long long,
                            GlobalLU_t *, SuperLUStat_t*);
-extern int     scopy_to_ucol (int, int, int *, int *, int *,
+extern long long     scopy_to_ucol (long long, long long, long long *, long long *, long long *,
                               float *, GlobalLU_t *);         
-extern int     spivotL (const int, const double, int *, int *, 
-                         int *, int *, int *, GlobalLU_t *, SuperLUStat_t*);
-extern void    spruneL (const int, const int *, const int, const int,
-			  const int *, const int *, int *, GlobalLU_t *);
-extern void    sreadmt (int *, int *, int *, float **, int **, int **);
-extern void    sGenXtrue (int, int, float *, int);
-extern void    sFillRHS (trans_t, int, float *, int, SuperMatrix *,
+extern long long     spivotL (const long long, const double, long long *, long long *, 
+                         long long *, long long *, long long *, GlobalLU_t *, SuperLUStat_t*);
+extern void    spruneL (const long long, const long long *, const long long, const long long,
+			  const long long *, const long long *, long long *, GlobalLU_t *);
+extern void    sreadmt (long long *, long long *, long long *, float **, long long **, long long **);
+extern void    sGenXtrue (long long, long long, float *, long long);
+extern void    sFillRHS (trans_t, long long, float *, long long, SuperMatrix *,
 			  SuperMatrix *);
-extern void    sgstrs (trans_t, SuperMatrix *, SuperMatrix *, int *, int *,
-                        SuperMatrix *, SuperLUStat_t*, int *);
+extern void    sgstrs (trans_t, SuperMatrix *, SuperMatrix *, long long *, long long *,
+                        SuperMatrix *, SuperLUStat_t*, long long *);
 /* ILU */
-extern void    sgsitrf (superlu_options_t*, SuperMatrix*, int, int, int*,
-		        void *, int, int *, int *, SuperMatrix *, SuperMatrix *,
-                        GlobalLU_t *, SuperLUStat_t*, int *);
-extern int     sldperm(int, int, int, int [], int [], float [],
-                        int [],	float [], float []);
-extern int     ilu_ssnode_dfs (const int, const int, const int *, const int *,
-			       const int *, int *, GlobalLU_t *);
-extern void    ilu_spanel_dfs (const int, const int, const int, SuperMatrix *,
-			       int *, int *, float *, float *, int *, int *,
-			       int *, int *, int *, int *, GlobalLU_t *);
-extern int     ilu_scolumn_dfs (const int, const int, int *, int *, int *,
-				int *, int *, int *, int *, int *,
+extern void    sgsitrf (superlu_options_t*, SuperMatrix*, long long, long long, long long*,
+		        void *, long long, long long *, long long *, SuperMatrix *, SuperMatrix *,
+                        GlobalLU_t *, SuperLUStat_t*, long long *);
+extern long long     sldperm(long long, long long, long long, long long [], long long [], float [],
+                        long long [],	float [], float []);
+extern long long     ilu_ssnode_dfs (const long long, const long long, const long long *, const long long *,
+			       const long long *, long long *, GlobalLU_t *);
+extern void    ilu_spanel_dfs (const long long, const long long, const long long, SuperMatrix *,
+			       long long *, long long *, float *, float *, long long *, long long *,
+			       long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern long long     ilu_scolumn_dfs (const long long, const long long, long long *, long long *, long long *,
+				long long *, long long *, long long *, long long *, long long *,
 				GlobalLU_t *);
-extern int     ilu_scopy_to_ucol (int, int, int *, int *, int *,
-                                  float *, int, milu_t, double, int,
-                                  float *, int *, GlobalLU_t *, float *);
-extern int     ilu_spivotL (const int, const double, int *, int *, int, int *,
-			    int *, int *, int *, double, milu_t,
+extern long long     ilu_scopy_to_ucol (long long, long long, long long *, long long *, long long *,
+                                  float *, long long, milu_t, double, long long,
+                                  float *, long long *, GlobalLU_t *, float *);
+extern long long     ilu_spivotL (const long long, const double, long long *, long long *, long long, long long *,
+			    long long *, long long *, long long *, double, milu_t,
                             float, GlobalLU_t *, SuperLUStat_t*);
-extern int     ilu_sdrop_row (superlu_options_t *, int, int, double,
-                              int, int *, double *, GlobalLU_t *, 
-                              float *, float *, int);
+extern long long     ilu_sdrop_row (superlu_options_t *, long long, long long, double,
+                              long long, long long *, double *, GlobalLU_t *, 
+                              float *, float *, long long);
 
 
 /*! \brief Driver related */
 
 extern void    sgsequ (SuperMatrix *, float *, float *, float *,
-			float *, float *, int *);
+			float *, float *, long long *);
 extern void    slaqgs (SuperMatrix *, float *, float *, float,
                         float, float, char *);
 extern void    sgscon (char *, SuperMatrix *, SuperMatrix *, 
-		         float, float *, SuperLUStat_t*, int *);
-extern float   sPivotGrowth(int, SuperMatrix *, int *, 
+		         float, float *, SuperLUStat_t*, long long *);
+extern float   sPivotGrowth(long long, SuperMatrix *, long long *, 
                             SuperMatrix *, SuperMatrix *);
 extern void    sgsrfs (trans_t, SuperMatrix *, SuperMatrix *,
-                       SuperMatrix *, int *, int *, char *, float *, 
+                       SuperMatrix *, long long *, long long *, char *, float *, 
                        float *, SuperMatrix *, SuperMatrix *,
-                       float *, float *, SuperLUStat_t*, int *);
+                       float *, float *, SuperLUStat_t*, long long *);
 
-extern int     sp_strsv (char *, char *, char *, SuperMatrix *,
-			SuperMatrix *, float *, SuperLUStat_t*, int *);
-extern int     sp_sgemv (char *, float, SuperMatrix *, float *,
-			int, float, float *, int);
+extern long long     sp_strsv (char *, char *, char *, SuperMatrix *,
+			SuperMatrix *, float *, SuperLUStat_t*, long long *);
+extern long long     sp_sgemv (char *, float, SuperMatrix *, float *,
+			long long, float, float *, long long);
 
-extern int     sp_sgemm (char *, char *, int, int, int, float,
-			SuperMatrix *, float *, int, float, 
-			float *, int);
+extern long long     sp_sgemm (char *, char *, long long, long long, long long, float,
+			SuperMatrix *, float *, long long, float, 
+			float *, long long);
 extern         float smach(char *);   /* from C99 standard, in float.h */
 
 /*! \brief Memory-related */
-extern int     sLUMemInit (fact_t, void *, int, int, int, int, int,
+extern long long     sLUMemInit (fact_t, void *, long long, long long, long long, long long, long long,
                             float, SuperMatrix *, SuperMatrix *,
-                            GlobalLU_t *, int **, float **);
-extern void    sSetRWork (int, int, float *, float **, float **);
-extern void    sLUWorkFree (int *, float *, GlobalLU_t *);
-extern int     sLUMemXpand (int, int, MemType, int *, GlobalLU_t *);
+                            GlobalLU_t *, long long **, float **);
+extern void    sSetRWork (long long, long long, float *, float **, float **);
+extern void    sLUWorkFree (long long *, float *, GlobalLU_t *);
+extern long long     sLUMemXpand (long long, long long, MemType, long long *, GlobalLU_t *);
 
-extern float  *floatMalloc(int);
-extern float  *floatCalloc(int);
-extern int     smemory_usage(const int, const int, const int, const int);
-extern int     sQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
-extern int     ilu_sQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
+extern float  *floatMalloc(long long);
+extern float  *floatCalloc(long long);
+extern long long     smemory_usage(const long long, const long long, const long long, const long long);
+extern long long     sQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
+extern long long     ilu_sQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
 
 /*! \brief Auxiliary routines */
-extern void    sreadhb(FILE *, int *, int *, int *, float **, int **, int **);
-extern void    sreadrb(int *, int *, int *, float **, int **, int **);
-extern void    sreadtriple(int *, int *, int *, float **, int **, int **);
-extern void    sreadMM(FILE *, int *, int *, int *, float **, int **, int **);
-extern void    sCompRow_to_CompCol(int, int, int, float*, int*, int*,
-		                   float **, int **, int **);
-extern void    sfill (float *, int, float);
-extern void    sinf_norm_error (int, SuperMatrix *, float *);
-extern float  sqselect(int, float *, int);
+extern void    sreadhb(FILE *, long long *, long long *, long long *, float **, long long **, long long **);
+extern void    sreadrb(long long *, long long *, long long *, float **, long long **, long long **);
+extern void    sreadtriple(long long *, long long *, long long *, float **, long long **, long long **);
+extern void    sreadMM(FILE *, long long *, long long *, long long *, float **, long long **, long long **);
+extern void    sCompRow_to_CompCol(long long, long long, long long, float*, long long*, long long*,
+		                   float **, long long **, long long **);
+extern void    sfill (float *, long long, float);
+extern void    sinf_norm_error (long long, SuperMatrix *, float *);
+extern float  sqselect(long long, float *, long long);
 
 
 /*! \brief Routines for debugging */
 extern void    sPrint_CompCol_Matrix(char *, SuperMatrix *);
 extern void    sPrint_SuperNode_Matrix(char *, SuperMatrix *);
 extern void    sPrint_Dense_Matrix(char *, SuperMatrix *);
-extern void    sprint_lu_col(char *, int, int, int *, GlobalLU_t *);
-extern int     print_double_vec(char *, int, double *);
-extern void    scheck_tempv(int, float *);
+extern void    sprint_lu_col(char *, long long, long long, long long *, GlobalLU_t *);
+extern long long     print_double_vec(char *, long long, double *);
+extern void    scheck_tempv(long long, float *);
 
 /*! \brief BLAS */
 
-extern int sgemm_(const char*, const char*, const int*, const int*, const int*,
-                  const float*, const float*, const int*, const float*,
-		  const int*, const float*, float*, const int*);
-extern int strsv_(char*, char*, char*, int*, float*, int*,
-                  float*, int*);
-extern int strsm_(char*, char*, char*, char*, int*, int*,
-                  float*, float*, int*, float*, int*);
-extern int sgemv_(char *, int *, int *, float *, float *a, int *,
-                  float *, int *, float *, float *, int *);
+extern long long sgemm_(const char*, const char*, const long long*, const long long*, const long long*,
+                  const float*, const float*, const long long*, const float*,
+		  const long long*, const float*, float*, const long long*);
+extern long long strsv_(char*, char*, char*, long long*, float*, long long*,
+                  float*, long long*);
+extern long long strsm_(char*, char*, char*, char*, long long*, long long*,
+                  float*, float*, long long*, float*, long long*);
+extern long long sgemv_(char *, long long *, long long *, float *, float *a, long long *,
+                  float *, long long *, float *, float *, long long *);
 
-extern void susolve(int, int, float*, float*);
-extern void slsolve(int, int, float*, float*);
-extern void smatvec(int, int, int, float*, float*, float*);
+extern void susolve(long long, long long, float*, float*);
+extern void slsolve(long long, long long, float*, float*);
+extern void smatvec(long long, long long, long long, float*, float*, float*);
 
 #ifdef __cplusplus
   }

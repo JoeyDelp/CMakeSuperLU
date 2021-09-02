@@ -62,35 +62,35 @@ at the top-level directory.
  * </pre>
  */
 
-int
+long long
 zpivotL(
-        const int  jcol,     /* in */
+        const long long  jcol,     /* in */
         const double u,      /* in - diagonal pivoting threshold */
-        int        *usepr,   /* re-use the pivot sequence given by perm_r/iperm_r */
-        int        *perm_r,  /* may be modified */
-        int        *iperm_r, /* in - inverse of perm_r */
-        int        *iperm_c, /* in - used to find diagonal of Pc*A*Pc' */
-        int        *pivrow,  /* out */
+        long long        *usepr,   /* re-use the pivot sequence given by perm_r/iperm_r */
+        long long        *perm_r,  /* may be modified */
+        long long        *iperm_r, /* in - inverse of perm_r */
+        long long        *iperm_c, /* in - used to find diagonal of Pc*A*Pc' */
+        long long        *pivrow,  /* out */
         GlobalLU_t *Glu,     /* modified - global LU data structures */
 	SuperLUStat_t *stat  /* output */
        )
 {
 
     doublecomplex one = {1.0, 0.0};
-    int          fsupc;	    /* first column in the supernode */
-    int          nsupc;	    /* no of columns in the supernode */
-    int          nsupr;     /* no of rows in the supernode */
-    int          lptr;	    /* points to the starting subscript of the supernode */
-    int          pivptr, old_pivptr, diag, diagind;
+    long long          fsupc;	    /* first column in the supernode */
+    long long          nsupc;	    /* no of columns in the supernode */
+    long long          nsupr;     /* no of rows in the supernode */
+    long long          lptr;	    /* points to the starting subscript of the supernode */
+    long long          pivptr, old_pivptr, diag, diagind;
     double       pivmax, rtemp, thresh;
     doublecomplex       temp;
     doublecomplex       *lu_sup_ptr; 
     doublecomplex       *lu_col_ptr;
-    int          *lsub_ptr;
-    int          isub, icol, k, itemp;
-    int          *lsub, *xlsub;
+    long long          *lsub_ptr;
+    long long          isub, icol, k, itemp;
+    long long          *lsub, *xlsub;
     doublecomplex       *lusup;
-    int          *xlusup;
+    long long          *xlusup;
     flops_t      *ops = stat->ops;
 
     /* Initialize pointers */

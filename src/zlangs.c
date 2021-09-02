@@ -74,7 +74,7 @@ double zlangs(char *norm, SuperMatrix *A)
     /* Local variables */
     NCformat *Astore;
     doublecomplex   *Aval;
-    int      i, j, irow;
+    long long      i, j, irow;
     double   value, sum;
     double   *rwork;
 

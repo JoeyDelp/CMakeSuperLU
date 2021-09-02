@@ -21,30 +21,30 @@ at the top-level directory.
 #include "superlu/slu_ddefs.h"
 #include "superlu/colamd.h"
 
-extern int  genmmd_(int *, int *, int *, int *, int *, int *, int *, 
-		    int *, int *, int *, int *, int *);
+extern long long  genmmd_(long long *, long long *, long long *, long long *, long long *, long long *, long long *, 
+		    long long *, long long *, long long *, long long *, long long *);
 
 void
 get_colamd(
-	   const int m,  /* number of rows in matrix A. */
-	   const int n,  /* number of columns in matrix A. */
-	   const int nnz,/* number of nonzeros in matrix A. */
-	   int *colptr,  /* column pointer of size n+1 for matrix A. */
-	   int *rowind,  /* row indices of size nz for matrix A. */
-	   int *perm_c   /* out - the column permutation vector. */
+	   const long long m,  /* number of rows in matrix A. */
+	   const long long n,  /* number of columns in matrix A. */
+	   const long long nnz,/* number of nonzeros in matrix A. */
+	   long long *colptr,  /* column pointer of size n+1 for matrix A. */
+	   long long *rowind,  /* row indices of size nz for matrix A. */
+	   long long *perm_c   /* out - the column permutation vector. */
 	   )
 {
-    int Alen, *A, i, info, *p;
+    long long Alen, *A, i, info, *p;
     double knobs[COLAMD_KNOBS];
-    int stats[COLAMD_STATS];
+    long long stats[COLAMD_STATS];
 
     Alen = colamd_recommended(nnz, m, n);
 
     colamd_set_defaults(knobs);
 
-    if (!(A = (int *) SUPERLU_MALLOC(Alen * sizeof(int))) )
+    if (!(A = (long long *) SUPERLU_MALLOC(Alen * sizeof(long long))) )
         ABORT("Malloc fails for A[]");
-    if (!(p = (int *) SUPERLU_MALLOC((n+1) * sizeof(int))) )
+    if (!(p = (long long *) SUPERLU_MALLOC((n+1) * sizeof(long long))) )
         ABORT("Malloc fails for p[]");
     for (i = 0; i <= n; ++i) p[i] = colptr[i];
     for (i = 0; i < nnz; ++i) A[i] = rowind[i];
@@ -79,26 +79,26 @@ get_colamd(
  */
 void
 getata(
-       const int m,      /* number of rows in matrix A. */
-       const int n,      /* number of columns in matrix A. */
-       const int nz,     /* number of nonzeros in matrix A */
-       int *colptr,      /* column pointer of size n+1 for matrix A. */
-       int *rowind,      /* row indices of size nz for matrix A. */
-       int *atanz,       /* out - on exit, returns the actual number of
+       const long long m,      /* number of rows in matrix A. */
+       const long long n,      /* number of columns in matrix A. */
+       const long long nz,     /* number of nonzeros in matrix A */
+       long long *colptr,      /* column pointer of size n+1 for matrix A. */
+       long long *rowind,      /* row indices of size nz for matrix A. */
+       long long *atanz,       /* out - on exit, returns the actual number of
                             nonzeros in matrix A'*A. */
-       int **ata_colptr, /* out - size n+1 */
-       int **ata_rowind  /* out - size *atanz */
+       long long **ata_colptr, /* out - size n+1 */
+       long long **ata_rowind  /* out - size *atanz */
        )
 {
-    register int i, j, k, col, num_nz, ti, trow;
-    int *marker, *b_colptr, *b_rowind;
-    int *t_colptr, *t_rowind; /* a column oriented form of T = A' */
+    register long long i, j, k, col, num_nz, ti, trow;
+    long long *marker, *b_colptr, *b_rowind;
+    long long *t_colptr, *t_rowind; /* a column oriented form of T = A' */
 
-    if ( !(marker = (int*) SUPERLU_MALLOC((SUPERLU_MAX(m,n)+1)*sizeof(int))) )
+    if ( !(marker = (long long*) SUPERLU_MALLOC((SUPERLU_MAX(m,n)+1)*sizeof(long long))) )
 	ABORT("SUPERLU_MALLOC fails for marker[]");
-    if ( !(t_colptr = (int*) SUPERLU_MALLOC((m+1) * sizeof(int))) )
+    if ( !(t_colptr = (long long*) SUPERLU_MALLOC((m+1) * sizeof(long long))) )
 	ABORT("SUPERLU_MALLOC t_colptr[]");
-    if ( !(t_rowind = (int*) SUPERLU_MALLOC(nz * sizeof(int))) )
+    if ( !(t_rowind = (long long*) SUPERLU_MALLOC(nz * sizeof(long long))) )
 	ABORT("SUPERLU_MALLOC fails for t_rowind[]");
 
     
@@ -160,10 +160,10 @@ getata(
     *atanz = num_nz;
     
     /* Allocate storage for A'*A */
-    if ( !(*ata_colptr = (int*) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(*ata_colptr = (long long*) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for ata_colptr[]");
     if ( *atanz ) {
-	if ( !(*ata_rowind = (int*) SUPERLU_MALLOC( *atanz * sizeof(int)) ) )
+	if ( !(*ata_rowind = (long long*) SUPERLU_MALLOC( *atanz * sizeof(long long)) ) )
 	    ABORT("SUPERLU_MALLOC fails for ata_rowind[]");
     }
     b_colptr = *ata_colptr; /* aliasing */
@@ -214,25 +214,25 @@ getata(
  */
 void
 at_plus_a(
-	  const int n,      /* number of columns in matrix A. */
-	  const int nz,     /* number of nonzeros in matrix A */
-	  int *colptr,      /* column pointer of size n+1 for matrix A. */
-	  int *rowind,      /* row indices of size nz for matrix A. */
-	  int *bnz,         /* out - on exit, returns the actual number of
+	  const long long n,      /* number of columns in matrix A. */
+	  const long long nz,     /* number of nonzeros in matrix A */
+	  long long *colptr,      /* column pointer of size n+1 for matrix A. */
+	  long long *rowind,      /* row indices of size nz for matrix A. */
+	  long long *bnz,         /* out - on exit, returns the actual number of
                                nonzeros in matrix A'*A. */
-	  int **b_colptr,   /* out - size n+1 */
-	  int **b_rowind    /* out - size *bnz */
+	  long long **b_colptr,   /* out - size n+1 */
+	  long long **b_rowind    /* out - size *bnz */
 	  )
 {
-    register int i, j, k, col, num_nz;
-    int *t_colptr, *t_rowind; /* a column oriented form of T = A' */
-    int *marker;
+    register long long i, j, k, col, num_nz;
+    long long *t_colptr, *t_rowind; /* a column oriented form of T = A' */
+    long long *marker;
 
-    if ( !(marker = (int*) SUPERLU_MALLOC( n * sizeof(int)) ) )
+    if ( !(marker = (long long*) SUPERLU_MALLOC( n * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for marker[]");
-    if ( !(t_colptr = (int*) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(t_colptr = (long long*) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for t_colptr[]");
-    if ( !(t_rowind = (int*) SUPERLU_MALLOC( nz * sizeof(int)) ) )
+    if ( !(t_rowind = (long long*) SUPERLU_MALLOC( nz * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails t_rowind[]");
 
     
@@ -295,10 +295,10 @@ at_plus_a(
     *bnz = num_nz;
     
     /* Allocate storage for A+A' */
-    if ( !(*b_colptr = (int*) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(*b_colptr = (long long*) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for b_colptr[]");
     if ( *bnz) {
-      if ( !(*b_rowind = (int*) SUPERLU_MALLOC( *bnz * sizeof(int)) ) )
+      if ( !(*b_rowind = (long long*) SUPERLU_MALLOC( *bnz * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for b_rowind[]");
     }
     
@@ -353,7 +353,7 @@ at_plus_a(
  * Arguments
  * =========
  *
- * ispec   (input) int
+ * ispec   (input) long long
  *         Specifies the type of column ordering to reduce fill:
  *         = 1: minimum degree on the structure of A^T * A
  *         = 2: minimum degree on the structure of A^T + A
@@ -366,19 +366,19 @@ at_plus_a(
  *         can be: Stype = NC; Dtype = _D; Mtype = GE. In the future,
  *         more general A can be handled.
  *
- * perm_c  (output) int*
+ * perm_c  (output) long long*
  *	   Column permutation vector of size A->ncol, which defines the 
  *         permutation matrix Pc; perm_c[i] = j means column i of A is 
  *         in position j in A*Pc.
  * </pre>
  */
 void
-get_perm_c(int ispec, SuperMatrix *A, int *perm_c)
+get_perm_c(long long ispec, SuperMatrix *A, long long *perm_c)
 {
     NCformat *Astore = A->Store;
-    int m, n, bnz = 0, *b_colptr, i;
-    int delta, maxint, nofsub, *invp;
-    int *b_rowind, *dhead, *qsize, *llist, *marker;
+    long long m, n, bnz = 0, *b_colptr, i;
+    long long delta, maxint, nofsub, *invp;
+    long long *b_rowind, *dhead, *qsize, *llist, *marker;
     double t, SuperLU_timer_();
     
     m = A->nrow;
@@ -427,16 +427,16 @@ get_perm_c(int ispec, SuperMatrix *A, int *perm_c)
 	/* Initialize and allocate storage for GENMMD. */
 	delta = 0; /* DELTA is a parameter to allow the choice of nodes
 		      whose degree <= min-degree + DELTA. */
-	maxint = 2147483647; /* 2**31 - 1 */
-	invp = (int *) SUPERLU_MALLOC((n+delta)*sizeof(int));
+	maxint = 9223372036854775807; /* 2**63 - 1 */
+	invp = (long long *) SUPERLU_MALLOC((n+delta)*sizeof(long long));
 	if ( !invp ) ABORT("SUPERLU_MALLOC fails for invp.");
-	dhead = (int *) SUPERLU_MALLOC((n+delta)*sizeof(int));
+	dhead = (long long *) SUPERLU_MALLOC((n+delta)*sizeof(long long));
 	if ( !dhead ) ABORT("SUPERLU_MALLOC fails for dhead.");
-	qsize = (int *) SUPERLU_MALLOC((n+delta)*sizeof(int));
+	qsize = (long long *) SUPERLU_MALLOC((n+delta)*sizeof(long long));
 	if ( !qsize ) ABORT("SUPERLU_MALLOC fails for qsize.");
-	llist = (int *) SUPERLU_MALLOC(n*sizeof(int));
+	llist = (long long *) SUPERLU_MALLOC(n*sizeof(long long));
 	if ( !llist ) ABORT("SUPERLU_MALLOC fails for llist.");
-	marker = (int *) SUPERLU_MALLOC(n*sizeof(int));
+	marker = (long long *) SUPERLU_MALLOC(n*sizeof(long long));
 	if ( !marker ) ABORT("SUPERLU_MALLOC fails for marker.");
 
 	/* Transform adjacency list into 1-based indexing required by GENMMD.*/

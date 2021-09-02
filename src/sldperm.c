@@ -38,7 +38,7 @@ extern int_t mc64ad_(int_t*, int_t*, int_t*, int_t [], int_t [], double [],
  * Arguments
  * =========
  *
- * job    (input) int
+ * job    (input) long long
  *        Control the action. Possible values for JOB are:
  *        = 1 : Compute a row permutation of the matrix so that the
  *              permuted matrix has as many entries on its diagonal as
@@ -60,17 +60,17 @@ extern int_t mc64ad_(int_t*, int_t*, int_t*, int_t [], int_t [], double [],
  *              absolute value.
  *        Restriction: 1 <= JOB <= 5.
  *
- * n      (input) int
+ * n      (input) long long
  *        The order of the matrix.
  *
- * nnz    (input) int
+ * nnz    (input) long long
  *        The number of nonzeros in the matrix.
  *
- * adjncy (input) int*, of size nnz
+ * adjncy (input) long long*, of size nnz
  *        The adjacency structure of the matrix, which contains the row
  *        indices of the nonzeros.
  *
- * colptr (input) int*, of size n+1
+ * colptr (input) long long*, of size n+1
  *        The pointers to the beginning of each column in ADJNCY.
  *
  * nzval  (input) float*, of size nnz
@@ -78,7 +78,7 @@ extern int_t mc64ad_(int_t*, int_t*, int_t*, int_t [], int_t [], double [],
  *        the entry corresponding to adjncy[k].
  *        It is not used if job = 1.
  *
- * perm   (output) int*, of size n
+ * perm   (output) long long*, of size n
  *        The permutation vector. perm[i] = j means row i in the
  *        original matrix is in row j of the permuted matrix.
  *
@@ -91,7 +91,7 @@ extern int_t mc64ad_(int_t*, int_t*, int_t*, int_t [], int_t [], double [],
  * </pre>
  */
 
-int
+long long
 sldperm(int_t job, int_t n, int_t nnz, int_t colptr[], int_t adjncy[],
 	float nzval[], int_t *perm, float u[], float v[])
 { 

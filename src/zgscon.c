@@ -72,7 +72,7 @@ at the top-level directory.
  *           The reciprocal of the condition number of the matrix A,   
  *           computed as RCOND = 1/(norm(A) * norm(inv(A))).
  *	    
- *    INFO    (output) int*
+ *    INFO    (output) long long*
  *           = 0:  successful exit   
  *           < 0:  if INFO = -i, the i-th argument had an illegal value   
  *
@@ -82,18 +82,18 @@ at the top-level directory.
 
 void
 zgscon(char *norm, SuperMatrix *L, SuperMatrix *U,
-       double anorm, double *rcond, SuperLUStat_t *stat, int *info)
+       double anorm, double *rcond, SuperLUStat_t *stat, long long *info)
 {
 
 
     /* Local variables */
-    int    kase, kase1, onenrm, i;
+    long long    kase, kase1, onenrm, i;
     double ainvnm;
     doublecomplex *work;
-    int    isave[3];
-    extern int zrscl_(int *, doublecomplex *, doublecomplex *, int *);
+    long long    isave[3];
+    extern long long zrscl_(long long *, doublecomplex *, doublecomplex *, long long *);
 
-    extern int zlacon2_(int *, doublecomplex *, doublecomplex *, double *, int *, int []);
+    extern long long zlacon2_(long long *, doublecomplex *, doublecomplex *, double *, long long *, long long []);
 
     
     /* Test the input parameters. */

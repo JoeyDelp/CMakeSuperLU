@@ -68,7 +68,7 @@ at the top-level directory.
  *          whether X should be overwritten by A * X  or A' * X.   
  *          On the final return from SLACON, KASE will again be 0.   
  *
- *   isave  (input/output) int [3]
+ *   isave  (input/output) long long [3]
  *          ISAVE is INTEGER array, dimension (3)
  *          ISAVE is used to save variables between calls to SLACON2
  *
@@ -85,27 +85,27 @@ at the top-level directory.
  * </pre>
  */
 
-int
-slacon2_(int *n, float *v, float *x, int *isgn, float *est, int *kase, int isave[3])
+long long
+slacon2_(long long *n, float *v, float *x, long long *isgn, float *est, long long *kase, long long isave[3])
 {
     /* Table of constant values */
-    int c__1 = 1;
+    long long c__1 = 1;
     float      zero = 0.0;
     float      one = 1.0;
     
     /* Local variables */
-    int jlast;
+    long long jlast;
     float altsgn, estold;
-    int i;
+    long long i;
     float temp;
 #ifdef _CRAY
-    extern int ISAMAX(int *, float *, int *);
-    extern float SASUM(int *, float *, int *);
-    extern int SCOPY(int *, float *, int *, float *, int *);
+    extern long long ISAMAX(long long *, float *, long long *);
+    extern float SASUM(long long *, float *, long long *);
+    extern long long SCOPY(long long *, float *, long long *, float *, long long *);
 #else
-    extern int isamax_(int *, float *, int *);
-    extern float sasum_(int *, float *, int *);
-    extern int scopy_(int *, float *, int *, float *, int *);
+    extern long long isamax_(long long *, float *, long long *);
+    extern float sasum_(long long *, float *, long long *);
+    extern long long scopy_(long long *, float *, long long *, float *, long long *);
 #endif
 #define d_sign(a, b) (b >= 0 ? fabs(a) : -fabs(a))    /* Copy sign */
 #define i_dnnt(a) \

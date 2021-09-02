@@ -51,7 +51,7 @@ at the top-level directory.
    ===================================================================== 
   </pre>
 */
-int icmax1_slu(int *n, complex *cx, int *incx)
+long long icmax1_slu(long long *n, complex *cx, long long *incx)
 {
 /*
        NEXT LINE IS THE ONLY MODIFICATION.   
@@ -60,11 +60,11 @@ int icmax1_slu(int *n, complex *cx, int *incx)
    Parameter adjustments   
        Function Body */
     /* System generated locals */
-    int ret_val, i__1, i__2;
+    long long ret_val, i__1, i__2;
     float r__1;
     /* Local variables */
     float smax;
-    int i, ix;
+    long long i, ix;
 
 
 #define CX(I) cx[(I)-1]

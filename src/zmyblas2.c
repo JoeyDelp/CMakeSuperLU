@@ -35,13 +35,13 @@ at the top-level directory.
  * triangular matrix is stored in a 2D array M(1:nrow,1:ncol). 
  * The solution will be returned in the rhs vector.
  */
-void zlsolve ( int ldm, int ncol, doublecomplex *M, doublecomplex *rhs )
+void zlsolve ( long long ldm, long long ncol, doublecomplex *M, doublecomplex *rhs )
 {
-    int k;
+    long long k;
     doublecomplex x0, x1, x2, x3, temp;
     doublecomplex *M0;
     doublecomplex *Mki0, *Mki1, *Mki2, *Mki3;
-    register int firstcol = 0;
+    register long long firstcol = 0;
 
     M0 = &M[0];
 
@@ -114,13 +114,13 @@ void zlsolve ( int ldm, int ncol, doublecomplex *M, doublecomplex *rhs )
  */
 void
 zusolve ( ldm, ncol, M, rhs )
-int ldm;	/* in */
-int ncol;	/* in */
+long long ldm;	/* in */
+long long ncol;	/* in */
 doublecomplex *M;	/* in */
 doublecomplex *rhs;	/* modified */
 {
     doublecomplex xj, temp;
-    int jcol, j, irow;
+    long long jcol, j, irow;
 
     jcol = ncol - 1;
 
@@ -145,9 +145,9 @@ doublecomplex *rhs;	/* modified */
  * The input matrix is M(1:nrow,1:ncol); The product is returned in Mxvec[].
  */
 void zmatvec ( ldm, nrow, ncol, M, vec, Mxvec )
-int ldm;	/* in -- leading dimension of M */
-int nrow;	/* in */ 
-int ncol;	/* in */
+long long ldm;	/* in -- leading dimension of M */
+long long nrow;	/* in */ 
+long long ncol;	/* in */
 doublecomplex *M;	/* in */
 doublecomplex *vec;	/* in */
 doublecomplex *Mxvec;	/* in/out */
@@ -155,8 +155,8 @@ doublecomplex *Mxvec;	/* in/out */
     doublecomplex vi0, vi1, vi2, vi3;
     doublecomplex *M0, temp;
     doublecomplex *Mki0, *Mki1, *Mki2, *Mki3;
-    register int firstcol = 0;
-    int k;
+    register long long firstcol = 0;
+    long long k;
 
     M0 = &M[0];
 

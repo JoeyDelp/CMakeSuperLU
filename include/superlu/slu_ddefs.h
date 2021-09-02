@@ -84,7 +84,7 @@ at the top-level directory.
 #endif
 
 /* Define my integer type int_t */
-typedef int int_t; /* default */
+typedef long long int_t; /* default */
 
 #include <math.h>
 #include <limits.h>
@@ -105,179 +105,179 @@ extern "C" {
 
 /*! \brief Driver routines */
 extern void
-dgssv(superlu_options_t *, SuperMatrix *, int *, int *, SuperMatrix *,
-      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, int *);
+dgssv(superlu_options_t *, SuperMatrix *, long long *, long long *, SuperMatrix *,
+      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, long long *);
 extern void
-dgssvx(superlu_options_t *, SuperMatrix *, int *, int *, int *,
+dgssvx(superlu_options_t *, SuperMatrix *, long long *, long long *, long long *,
        char *, double *, double *, SuperMatrix *, SuperMatrix *,
-       void *, int, SuperMatrix *, SuperMatrix *,
+       void *, long long, SuperMatrix *, SuperMatrix *,
        double *, double *, double *, double *,
-       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, int *);
+       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, long long *);
     /* ILU */
 extern void
-dgsisv(superlu_options_t *, SuperMatrix *, int *, int *, SuperMatrix *,
-      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, int *);
+dgsisv(superlu_options_t *, SuperMatrix *, long long *, long long *, SuperMatrix *,
+      SuperMatrix *, SuperMatrix *, SuperLUStat_t *, long long *);
 extern void
-dgsisx(superlu_options_t *, SuperMatrix *, int *, int *, int *,
+dgsisx(superlu_options_t *, SuperMatrix *, long long *, long long *, long long *,
        char *, double *, double *, SuperMatrix *, SuperMatrix *,
-       void *, int, SuperMatrix *, SuperMatrix *, double *, double *,
-       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, int *);
+       void *, long long, SuperMatrix *, SuperMatrix *, double *, double *,
+       GlobalLU_t *, mem_usage_t *, SuperLUStat_t *, long long *);
 
 
 /*! \brief Supernodal LU factor related */
 extern void
-dCreate_CompCol_Matrix(SuperMatrix *, int, int, int, double *,
-		       int *, int *, Stype_t, Dtype_t, Mtype_t);
+dCreate_CompCol_Matrix(SuperMatrix *, long long, long long, long long, double *,
+		       long long *, long long *, Stype_t, Dtype_t, Mtype_t);
 extern void
-dCreate_CompRow_Matrix(SuperMatrix *, int, int, int, double *,
-		       int *, int *, Stype_t, Dtype_t, Mtype_t);
+dCreate_CompRow_Matrix(SuperMatrix *, long long, long long, long long, double *,
+		       long long *, long long *, Stype_t, Dtype_t, Mtype_t);
 extern void
 dCopy_CompCol_Matrix(SuperMatrix *, SuperMatrix *);
 extern void
-dCreate_Dense_Matrix(SuperMatrix *, int, int, double *, int,
+dCreate_Dense_Matrix(SuperMatrix *, long long, long long, double *, long long,
 		     Stype_t, Dtype_t, Mtype_t);
 extern void
-dCreate_SuperNode_Matrix(SuperMatrix *, int, int, int, double *, 
-		         int *, int *, int *, int *, int *,
+dCreate_SuperNode_Matrix(SuperMatrix *, long long, long long, long long, double *, 
+		         long long *, long long *, long long *, long long *, long long *,
 			 Stype_t, Dtype_t, Mtype_t);
 extern void
-dCopy_Dense_Matrix(int, int, double *, int, double *, int);
+dCopy_Dense_Matrix(long long, long long, double *, long long, double *, long long);
 
-extern void    countnz (const int, int *, int *, int *, GlobalLU_t *);
-extern void    ilu_countnz (const int, int *, int *, GlobalLU_t *);
-extern void    fixupL (const int, const int *, GlobalLU_t *);
+extern void    countnz (const long long, long long *, long long *, long long *, GlobalLU_t *);
+extern void    ilu_countnz (const long long, long long *, long long *, GlobalLU_t *);
+extern void    fixupL (const long long, const long long *, GlobalLU_t *);
 
-extern void    dallocateA (int, int, double **, int **, int **);
+extern void    dallocateA (long long, long long, double **, long long **, long long **);
 extern void    dgstrf (superlu_options_t*, SuperMatrix*,
-                       int, int, int*, void *, int, int *, int *, 
+                       long long, long long, long long*, void *, long long, long long *, long long *, 
                        SuperMatrix *, SuperMatrix *, GlobalLU_t *,
-		       SuperLUStat_t*, int *);
-extern int     dsnode_dfs (const int, const int, const int *, const int *,
-			     const int *, int *, int *, GlobalLU_t *);
-extern int     dsnode_bmod (const int, const int, const int, double *,
+		       SuperLUStat_t*, long long *);
+extern long long     dsnode_dfs (const long long, const long long, const long long *, const long long *,
+			     const long long *, long long *, long long *, GlobalLU_t *);
+extern long long     dsnode_bmod (const long long, const long long, const long long, double *,
                               double *, GlobalLU_t *, SuperLUStat_t*);
-extern void    dpanel_dfs (const int, const int, const int, SuperMatrix *,
-			   int *, int *, double *, int *, int *, int *,
-			   int *, int *, int *, int *, GlobalLU_t *);
-extern void    dpanel_bmod (const int, const int, const int, const int,
-                           double *, double *, int *, int *,
+extern void    dpanel_dfs (const long long, const long long, const long long, SuperMatrix *,
+			   long long *, long long *, double *, long long *, long long *, long long *,
+			   long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern void    dpanel_bmod (const long long, const long long, const long long, const long long,
+                           double *, double *, long long *, long long *,
 			   GlobalLU_t *, SuperLUStat_t*);
-extern int     dcolumn_dfs (const int, const int, int *, int *, int *, int *,
-			   int *, int *, int *, int *, int *, GlobalLU_t *);
-extern int     dcolumn_bmod (const int, const int, double *,
-			   double *, int *, int *, int,
+extern long long     dcolumn_dfs (const long long, const long long, long long *, long long *, long long *, long long *,
+			   long long *, long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern long long     dcolumn_bmod (const long long, const long long, double *,
+			   double *, long long *, long long *, long long,
                            GlobalLU_t *, SuperLUStat_t*);
-extern int     dcopy_to_ucol (int, int, int *, int *, int *,
+extern long long     dcopy_to_ucol (long long, long long, long long *, long long *, long long *,
                               double *, GlobalLU_t *);         
-extern int     dpivotL (const int, const double, int *, int *, 
-                         int *, int *, int *, GlobalLU_t *, SuperLUStat_t*);
-extern void    dpruneL (const int, const int *, const int, const int,
-			  const int *, const int *, int *, GlobalLU_t *);
-extern void    dreadmt (int *, int *, int *, double **, int **, int **);
-extern void    dGenXtrue (int, int, double *, int);
-extern void    dFillRHS (trans_t, int, double *, int, SuperMatrix *,
+extern long long     dpivotL (const long long, const double, long long *, long long *, 
+                         long long *, long long *, long long *, GlobalLU_t *, SuperLUStat_t*);
+extern void    dpruneL (const long long, const long long *, const long long, const long long,
+			  const long long *, const long long *, long long *, GlobalLU_t *);
+extern void    dreadmt (long long *, long long *, long long *, double **, long long **, long long **);
+extern void    dGenXtrue (long long, long long, double *, long long);
+extern void    dFillRHS (trans_t, long long, double *, long long, SuperMatrix *,
 			  SuperMatrix *);
-extern void    dgstrs (trans_t, SuperMatrix *, SuperMatrix *, int *, int *,
-                        SuperMatrix *, SuperLUStat_t*, int *);
+extern void    dgstrs (trans_t, SuperMatrix *, SuperMatrix *, long long *, long long *,
+                        SuperMatrix *, SuperLUStat_t*, long long *);
 /* ILU */
-extern void    dgsitrf (superlu_options_t*, SuperMatrix*, int, int, int*,
-		        void *, int, int *, int *, SuperMatrix *, SuperMatrix *,
-                        GlobalLU_t *, SuperLUStat_t*, int *);
-extern int     dldperm(int, int, int, int [], int [], double [],
-                        int [],	double [], double []);
-extern int     ilu_dsnode_dfs (const int, const int, const int *, const int *,
-			       const int *, int *, GlobalLU_t *);
-extern void    ilu_dpanel_dfs (const int, const int, const int, SuperMatrix *,
-			       int *, int *, double *, double *, int *, int *,
-			       int *, int *, int *, int *, GlobalLU_t *);
-extern int     ilu_dcolumn_dfs (const int, const int, int *, int *, int *,
-				int *, int *, int *, int *, int *,
+extern void    dgsitrf (superlu_options_t*, SuperMatrix*, long long, long long, long long*,
+		        void *, long long, long long *, long long *, SuperMatrix *, SuperMatrix *,
+                        GlobalLU_t *, SuperLUStat_t*, long long *);
+extern long long     dldperm(long long, long long, long long, long long [], long long [], double [],
+                        long long [],	double [], double []);
+extern long long     ilu_dsnode_dfs (const long long, const long long, const long long *, const long long *,
+			       const long long *, long long *, GlobalLU_t *);
+extern void    ilu_dpanel_dfs (const long long, const long long, const long long, SuperMatrix *,
+			       long long *, long long *, double *, double *, long long *, long long *,
+			       long long *, long long *, long long *, long long *, GlobalLU_t *);
+extern long long     ilu_dcolumn_dfs (const long long, const long long, long long *, long long *, long long *,
+				long long *, long long *, long long *, long long *, long long *,
 				GlobalLU_t *);
-extern int     ilu_dcopy_to_ucol (int, int, int *, int *, int *,
-                                  double *, int, milu_t, double, int,
-                                  double *, int *, GlobalLU_t *, double *);
-extern int     ilu_dpivotL (const int, const double, int *, int *, int, int *,
-			    int *, int *, int *, double, milu_t,
+extern long long     ilu_dcopy_to_ucol (long long, long long, long long *, long long *, long long *,
+                                  double *, long long, milu_t, double, long long,
+                                  double *, long long *, GlobalLU_t *, double *);
+extern long long     ilu_dpivotL (const long long, const double, long long *, long long *, long long, long long *,
+			    long long *, long long *, long long *, double, milu_t,
                             double, GlobalLU_t *, SuperLUStat_t*);
-extern int     ilu_ddrop_row (superlu_options_t *, int, int, double,
-                              int, int *, double *, GlobalLU_t *, 
-                              double *, double *, int);
+extern long long     ilu_ddrop_row (superlu_options_t *, long long, long long, double,
+                              long long, long long *, double *, GlobalLU_t *, 
+                              double *, double *, long long);
 
 
 /*! \brief Driver related */
 
 extern void    dgsequ (SuperMatrix *, double *, double *, double *,
-			double *, double *, int *);
+			double *, double *, long long *);
 extern void    dlaqgs (SuperMatrix *, double *, double *, double,
                         double, double, char *);
 extern void    dgscon (char *, SuperMatrix *, SuperMatrix *, 
-		         double, double *, SuperLUStat_t*, int *);
-extern double   dPivotGrowth(int, SuperMatrix *, int *, 
+		         double, double *, SuperLUStat_t*, long long *);
+extern double   dPivotGrowth(long long, SuperMatrix *, long long *, 
                             SuperMatrix *, SuperMatrix *);
 extern void    dgsrfs (trans_t, SuperMatrix *, SuperMatrix *,
-                       SuperMatrix *, int *, int *, char *, double *, 
+                       SuperMatrix *, long long *, long long *, char *, double *, 
                        double *, SuperMatrix *, SuperMatrix *,
-                       double *, double *, SuperLUStat_t*, int *);
+                       double *, double *, SuperLUStat_t*, long long *);
 
-extern int     sp_dtrsv (char *, char *, char *, SuperMatrix *,
-			SuperMatrix *, double *, SuperLUStat_t*, int *);
-extern int     sp_dgemv (char *, double, SuperMatrix *, double *,
-			int, double, double *, int);
+extern long long     sp_dtrsv (char *, char *, char *, SuperMatrix *,
+			SuperMatrix *, double *, SuperLUStat_t*, long long *);
+extern long long     sp_dgemv (char *, double, SuperMatrix *, double *,
+			long long, double, double *, long long);
 
-extern int     sp_dgemm (char *, char *, int, int, int, double,
-			SuperMatrix *, double *, int, double, 
-			double *, int);
+extern long long     sp_dgemm (char *, char *, long long, long long, long long, double,
+			SuperMatrix *, double *, long long, double, 
+			double *, long long);
 extern         double dmach(char *);   /* from C99 standard, in float.h */
 
 /*! \brief Memory-related */
-extern int     dLUMemInit (fact_t, void *, int, int, int, int, int,
+extern long long     dLUMemInit (fact_t, void *, long long, long long, long long, long long, long long,
                             double, SuperMatrix *, SuperMatrix *,
-                            GlobalLU_t *, int **, double **);
-extern void    dSetRWork (int, int, double *, double **, double **);
-extern void    dLUWorkFree (int *, double *, GlobalLU_t *);
-extern int     dLUMemXpand (int, int, MemType, int *, GlobalLU_t *);
+                            GlobalLU_t *, long long **, double **);
+extern void    dSetRWork (long long, long long, double *, double **, double **);
+extern void    dLUWorkFree (long long *, double *, GlobalLU_t *);
+extern long long     dLUMemXpand (long long, long long, MemType, long long *, GlobalLU_t *);
 
-extern double  *doubleMalloc(int);
-extern double  *doubleCalloc(int);
-extern int     dmemory_usage(const int, const int, const int, const int);
-extern int     dQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
-extern int     ilu_dQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
+extern double  *doubleMalloc(long long);
+extern double  *doubleCalloc(long long);
+extern long long     dmemory_usage(const long long, const long long, const long long, const long long);
+extern long long     dQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
+extern long long     ilu_dQuerySpace (SuperMatrix *, SuperMatrix *, mem_usage_t *);
 
 /*! \brief Auxiliary routines */
-extern void    dreadhb(FILE *, int *, int *, int *, double **, int **, int **);
-extern void    dreadrb(int *, int *, int *, double **, int **, int **);
-extern void    dreadtriple(int *, int *, int *, double **, int **, int **);
-extern void    dreadMM(FILE *, int *, int *, int *, double **, int **, int **);
-extern void    dCompRow_to_CompCol(int, int, int, double*, int*, int*,
-		                   double **, int **, int **);
-extern void    dfill (double *, int, double);
-extern void    dinf_norm_error (int, SuperMatrix *, double *);
-extern double  dqselect(int, double *, int);
+extern void    dreadhb(FILE *, long long *, long long *, long long *, double **, long long **, long long **);
+extern void    dreadrb(long long *, long long *, long long *, double **, long long **, long long **);
+extern void    dreadtriple(long long *, long long *, long long *, double **, long long **, long long **);
+extern void    dreadMM(FILE *, long long *, long long *, long long *, double **, long long **, long long **);
+extern void    dCompRow_to_CompCol(long long, long long, long long, double*, long long*, long long*,
+		                   double **, long long **, long long **);
+extern void    dfill (double *, long long, double);
+extern void    dinf_norm_error (long long, SuperMatrix *, double *);
+extern double  dqselect(long long, double *, long long);
 
 
 /*! \brief Routines for debugging */
 extern void    dPrint_CompCol_Matrix(char *, SuperMatrix *);
 extern void    dPrint_SuperNode_Matrix(char *, SuperMatrix *);
 extern void    dPrint_Dense_Matrix(char *, SuperMatrix *);
-extern void    dprint_lu_col(char *, int, int, int *, GlobalLU_t *);
-extern int     print_double_vec(char *, int, double *);
-extern void    dcheck_tempv(int, double *);
+extern void    dprint_lu_col(char *, long long, long long, long long *, GlobalLU_t *);
+extern long long     print_double_vec(char *, long long, double *);
+extern void    dcheck_tempv(long long, double *);
 
 /*! \brief BLAS */
 
-extern int dgemm_(const char*, const char*, const int*, const int*, const int*,
-                  const double*, const double*, const int*, const double*,
-		  const int*, const double*, double*, const int*);
-extern int dtrsv_(char*, char*, char*, int*, double*, int*,
-                  double*, int*);
-extern int dtrsm_(char*, char*, char*, char*, int*, int*,
-                  double*, double*, int*, double*, int*);
-extern int dgemv_(char *, int *, int *, double *, double *a, int *,
-                  double *, int *, double *, double *, int *);
+extern long long dgemm_(const char*, const char*, const long long*, const long long*, const long long*,
+                  const double*, const double*, const long long*, const double*,
+		  const long long*, const double*, double*, const long long*);
+extern long long dtrsv_(char*, char*, char*, long long*, double*, long long*,
+                  double*, long long*);
+extern long long dtrsm_(char*, char*, char*, char*, long long*, long long*,
+                  double*, double*, long long*, double*, long long*);
+extern long long dgemv_(char *, long long *, long long *, double *, double *a, long long *,
+                  double *, long long *, double *, double *, long long *);
 
-extern void dusolve(int, int, double*, double*);
-extern void dlsolve(int, int, double*, double*);
-extern void dmatvec(int, int, int, double*, double*, double*);
+extern void dusolve(long long, long long, double*, double*);
+extern void dlsolve(long long, long long, double*, double*);
+extern void dmatvec(long long, long long, long long, double*, double*, double*);
 
 #ifdef __cplusplus
   }

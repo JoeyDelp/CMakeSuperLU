@@ -80,7 +80,7 @@ at the top-level directory.
  *           close to overflow or very close to underflow, the matrix   
  *           should be scaled.
  *	    
- *   INFO    (output) int*
+ *   INFO    (output) long long*
  *           = 0:  successful exit   
  *           < 0:  if INFO = -i, the i-th argument had an illegal value   
  *           > 0:  if INFO = i,  and i is   
@@ -92,14 +92,14 @@ at the top-level directory.
  */
 void
 zgsequ(SuperMatrix *A, double *r, double *c, double *rowcnd,
-	double *colcnd, double *amax, int *info)
+	double *colcnd, double *amax, long long *info)
 {
 
 
     /* Local variables */
     NCformat *Astore;
     doublecomplex   *Aval;
-    int i, j, irow;
+    long long i, j, irow;
     double rcmin, rcmax;
     double bignum, smlnum;
     extern double dmach(char *);

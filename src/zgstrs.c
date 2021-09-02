@@ -65,12 +65,12 @@ at the top-level directory.
  *         zgstrf(). Use column-wise storage scheme, i.e., U has types:
  *         Stype = SLU_NC, Dtype = SLU_Z, Mtype = SLU_TRU.
  *
- * perm_c  (input) int*, dimension (L->ncol)
+ * perm_c  (input) long long*, dimension (L->ncol)
  *	   Column permutation vector, which defines the 
  *         permutation matrix Pc; perm_c[i] = j means column i of A is 
  *         in position j in A*Pc.
  *
- * perm_r  (input) int*, dimension (L->nrow)
+ * perm_r  (input) long long*, dimension (L->nrow)
  *         Row permutation vector, which defines the permutation matrix Pr; 
  *         perm_r[i] = j means row i of A is in position j in Pr*A.
  *
@@ -83,7 +83,7 @@ at the top-level directory.
  *          Record the statistics on runtime and floating-point operation count.
  *          See util.h for the definition of 'SuperLUStat_t'.
  *
- * info    (output) int*
+ * info    (output) long long*
  * 	   = 0: successful exit
  *	   < 0: if info = -i, the i-th argument had an illegal value
  * </pre>
@@ -91,14 +91,14 @@ at the top-level directory.
 
 void
 zgstrs (trans_t trans, SuperMatrix *L, SuperMatrix *U,
-        int *perm_c, int *perm_r, SuperMatrix *B,
-        SuperLUStat_t *stat, int *info)
+        long long *perm_c, long long *perm_r, SuperMatrix *B,
+        SuperLUStat_t *stat, long long *info)
 {
 
 #ifdef _CRAY
     _fcd ftcs1, ftcs2, ftcs3, ftcs4;
 #endif
-    int      incx = 1, incy = 1;
+    long long      incx = 1, incy = 1;
 #ifdef USE_VENDOR_BLAS
     doublecomplex   alpha = {1.0, 0.0}, beta = {1.0, 0.0};
     doublecomplex   *work_col;
@@ -109,8 +109,8 @@ zgstrs (trans_t trans, SuperMatrix *L, SuperMatrix *U,
     SCformat *Lstore;
     NCformat *Ustore;
     doublecomplex   *Lval, *Uval;
-    int      fsupc, nrow, nsupr, nsupc, luptr, istart, irow;
-    int      i, j, k, iptr, jcol, n, ldb, nrhs;
+    long long      fsupc, nrow, nsupr, nsupc, luptr, istart, irow;
+    long long      i, j, k, iptr, jcol, n, ldb, nrhs;
     doublecomplex   *work, *rhs_work, *soln;
     flops_t  solve_ops;
     void zprint_soln();
@@ -344,9 +344,9 @@ zgstrs (trans_t trans, SuperMatrix *L, SuperMatrix *U,
  * Diagnostic print of the solution vector 
  */
 void
-zprint_soln(int n, int nrhs, doublecomplex *soln)
+zprint_soln(long long n, long long nrhs, doublecomplex *soln)
 {
-    int i;
+    long long i;
 
     for (i = 0; i < n; i++)
   	printf("\t%d: %.4f\t%.4f\n", i, soln[i].r, soln[i].i);

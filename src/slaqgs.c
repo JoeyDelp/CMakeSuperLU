@@ -99,7 +99,7 @@ slaqgs(SuperMatrix *A, float *r, float *c,
     /* Local variables */
     NCformat *Astore;
     float   *Aval;
-    int i, j, irow;
+    long long i, j, irow;
     float large, small, cj;
 
 

@@ -25,7 +25,7 @@ at the top-level directory.
 
 
 #if ( DEBUGlevel>=1 )           /* Debug malloc/free. */
-int superlu_malloc_total = 0;
+long long superlu_malloc_total = 0;
 
 #define PAD_FACTOR  2
 #define DWORD  (sizeof(double)) /* Be sure it's no smaller than double. */
@@ -102,9 +102,9 @@ void superlu_free(void *addr)
 /*! \brief Set up pointers for integer working arrays.
  */
 void
-SetIWork(int m, int n, int panel_size, int *iworkptr, int **segrep,
-	 int **parent, int **xplore, int **repfnz, int **panel_lsub,
-	 int **xprune, int **marker)
+SetIWork(long long m, long long n, long long panel_size, long long *iworkptr, long long **segrep,
+	 long long **parent, long long **xplore, long long **repfnz, long long **panel_lsub,
+	 long long **xprune, long long **marker)
 {
     *segrep = iworkptr;
     *parent = iworkptr + m;
@@ -119,17 +119,17 @@ SetIWork(int m, int n, int panel_size, int *iworkptr, int **segrep,
 
 
 void
-copy_mem_int(int howmany, void *old, void *new)
+copy_mem_int(long long howmany, void *old, void *new)
 {
-    register int i;
-    int *iold = old;
-    int *inew = new;
+    register long long i;
+    long long *iold = old;
+    long long *inew = new;
     for (i = 0; i < howmany; i++) inew[i] = iold[i];
 }
 
 
 void
-user_bcopy(char *src, char *dest, int bytes)
+user_bcopy(char *src, char *dest, long long bytes)
 {
     char *s_ptr, *d_ptr;
 
@@ -140,21 +140,21 @@ user_bcopy(char *src, char *dest, int bytes)
 
 
 
-int *intMalloc(int n)
+long long *intMalloc(long long n)
 {
-    int *buf;
-    buf = (int *) SUPERLU_MALLOC((size_t) n * sizeof(int));
+    long long *buf;
+    buf = (long long *) SUPERLU_MALLOC((size_t) n * sizeof(long long));
     if ( !buf ) {
 	ABORT("SUPERLU_MALLOC fails for buf in intMalloc()");
     }
     return (buf);
 }
 
-int *intCalloc(int n)
+long long *intCalloc(long long n)
 {
-    int *buf;
-    register int i;
-    buf = (int *) SUPERLU_MALLOC(n * sizeof(int));
+    long long *buf;
+    register long long i;
+    buf = (long long *) SUPERLU_MALLOC(n * sizeof(long long));
     if ( !buf ) {
 	ABORT("SUPERLU_MALLOC fails for buf in intCalloc()");
     }
@@ -167,11 +167,11 @@ int *intCalloc(int n)
 #if 0
 check_expanders()
 {
-    int p;
+    long long p;
     printf("Check expanders:\n");
     for (p = 0; p < NO_MEMTYPE; p++) {
 	printf("type %d, size %d, mem %d\n",
-	       p, expanders[p].size, (int)expanders[p].mem);
+	       p, expanders[p].size, (long long)expanders[p].mem);
     }
 
     return 0;
@@ -189,8 +189,8 @@ StackInfo()
 
 PrintStack(char *msg, GlobalLU_t *Glu)
 {
-    int i;
-    int *xlsub, *lsub, *xusub, *usub;
+    long long i;
+    long long *xlsub, *lsub, *xusub, *usub;
 
     xlsub = Glu->xlsub;
     lsub  = Glu->lsub;

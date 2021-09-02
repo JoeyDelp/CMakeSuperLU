@@ -23,16 +23,16 @@ at the top-level directory.
 #include "superlu/slu_zdefs.h"
 
 #ifdef DEBUG
-int num_drop_U;
+long long num_drop_U;
 #endif
 
-extern void zcopy_(int *, doublecomplex [], int *, doublecomplex [], int *);
+extern void zcopy_(long long *, doublecomplex [], long long *, doublecomplex [], long long *);
 
 #if 0
 static doublecomplex *A;  /* used in _compare_ only */
-static int _compare_(const void *a, const void *b)
+static long long _compare_(const void *a, const void *b)
 {
-    register int *x = (int *)a, *y = (int *)b;
+    register long long *x = (long long *)a, *y = (long long *)b;
     register double xx = z_abs1(&A[*x]), yy = z_abs1(&A[*y]);
     if (xx > yy) return -1;
     else if (xx < yy) return 1;
@@ -40,20 +40,20 @@ static int _compare_(const void *a, const void *b)
 }
 #endif
 
-int
+long long
 ilu_zcopy_to_ucol(
-	      int	 jcol,	   /* in */
-	      int	 nseg,	   /* in */
-	      int	 *segrep,  /* in */
-	      int	 *repfnz,  /* in */
-	      int	 *perm_r,  /* in */
+	      long long	 jcol,	   /* in */
+	      long long	 nseg,	   /* in */
+	      long long	 *segrep,  /* in */
+	      long long	 *repfnz,  /* in */
+	      long long	 *perm_r,  /* in */
 	      doublecomplex	 *dense,   /* modified - reset to zero on return */
-	      int  	 drop_rule,/* in */
+	      long long  	 drop_rule,/* in */
 	      milu_t	 milu,	   /* in */
 	      double	 drop_tol, /* in */
-	      int	 quota,    /* maximum nonzero entries allowed */
+	      long long	 quota,    /* maximum nonzero entries allowed */
 	      doublecomplex	 *sum,	   /* out - the sum of dropped entries */
-	      int	 *nnzUj,   /* in - out */
+	      long long	 *nnzUj,   /* in - out */
 	      GlobalLU_t *Glu,	   /* modified */
 	      double	 *work	   /* working space with minimum size n,
 				    * used by the second dropping rule */
@@ -62,21 +62,21 @@ ilu_zcopy_to_ucol(
 /*
  * Gather from SPA dense[*] to global ucol[*].
  */
-    int       ksub, krep, ksupno;
-    int       i, k, kfnz, segsze;
-    int       fsupc, isub, irow;
-    int       jsupno, nextu;
-    int       new_next, mem_error;
-    int       *xsup, *supno;
-    int       *lsub, *xlsub;
+    long long       ksub, krep, ksupno;
+    long long       i, k, kfnz, segsze;
+    long long       fsupc, isub, irow;
+    long long       jsupno, nextu;
+    long long       new_next, mem_error;
+    long long       *xsup, *supno;
+    long long       *lsub, *xlsub;
     doublecomplex    *ucol;
-    int       *usub, *xusub;
-    int       nzumax;
-    int       m; /* number of entries in the nonzero U-segments */
+    long long       *usub, *xusub;
+    long long       nzumax;
+    long long       m; /* number of entries in the nonzero U-segments */
     register double d_max = 0.0, d_min = 1.0 / dmach("Safe minimum");
     register double tmp;
     doublecomplex zero = {0.0, 0.0};
-    int i_1 = 1;
+    long long i_1 = 1;
 
     xsup    = Glu->xsup;
     supno   = Glu->supno;
@@ -164,7 +164,7 @@ ilu_zcopy_to_ucol(
     /* second dropping rule */
     if (drop_rule & DROP_SECONDARY && m > quota) {
 	register double tol = d_max;
-	register int m0 = xusub[jcol] + m - 1;
+	register long long m0 = xusub[jcol] + m - 1;
 
 	if (quota > 0) {
 	    if (drop_rule & DROP_INTERP) {
@@ -177,7 +177,7 @@ ilu_zcopy_to_ucol(
 #if 0
 		A = &ucol[xusub[jcol]];
 		for (i = 0; i < m; i++) work[i] = i;
-		qsort(work, m, sizeof(int), _compare_);
+		qsort(work, m, sizeof(long long), _compare_);
 		tol = fabs(usub[xusub[jcol] + work[quota]]);
 #endif
 	    }

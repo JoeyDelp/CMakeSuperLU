@@ -42,18 +42,18 @@ at the top-level directory.
  */ 
 void
 relax_snode (
-	     const     int n,
-	     int       *et,           /* column elimination tree */
-	     const int relax_columns, /* max no of columns allowed in a
+	     const     long long n,
+	     long long       *et,           /* column elimination tree */
+	     const long long relax_columns, /* max no of columns allowed in a
 					 relaxed snode */
-	     int       *descendants,  /* no of descendants of each node
+	     long long       *descendants,  /* no of descendants of each node
 					 in the etree */
-	     int       *relax_end     /* last column in a supernode */
+	     long long       *relax_end     /* last column in a supernode */
 	     )
 {
 
-    register int j, parent;
-    register int snode_start;	/* beginning of a snode */
+    register long long j, parent;
+    register long long snode_start;	/* beginning of a snode */
     
     ifill (relax_end, n, EMPTY);
     for (j = 0; j < n; j++) descendants[j] = 0;

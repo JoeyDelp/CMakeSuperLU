@@ -68,7 +68,7 @@ double SuperLU_timer_()
 #else
     struct tms use;
     double tmp;
-    int clocks_per_sec = sysconf(_SC_CLK_TCK);
+    long long clocks_per_sec = sysconf(_SC_CLK_TCK);
 
     times ( &use );
     tmp = use.tms_utime;

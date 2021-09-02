@@ -67,39 +67,39 @@ at the top-level directory.
 
 void
 dpanel_dfs (
-	   const int  m,           /* in - number of rows in the matrix */
-	   const int  w,           /* in */
-	   const int  jcol,        /* in */
+	   const long long  m,           /* in - number of rows in the matrix */
+	   const long long  w,           /* in */
+	   const long long  jcol,        /* in */
 	   SuperMatrix *A,       /* in - original matrix */
-	   int        *perm_r,     /* in */
-	   int        *nseg,	   /* out */
+	   long long        *perm_r,     /* in */
+	   long long        *nseg,	   /* out */
 	   double     *dense,      /* out */
-	   int        *panel_lsub, /* out */
-	   int        *segrep,     /* out */
-	   int        *repfnz,     /* out */
-	   int        *xprune,     /* out */
-	   int        *marker,     /* out */     
-	   int        *parent,     /* working array */
-	   int        *xplore,     /* working array */
+	   long long        *panel_lsub, /* out */
+	   long long        *segrep,     /* out */
+	   long long        *repfnz,     /* out */
+	   long long        *xprune,     /* out */
+	   long long        *marker,     /* out */     
+	   long long        *parent,     /* working array */
+	   long long        *xplore,     /* working array */
 	   GlobalLU_t *Glu         /* modified */
 	   )
 {
 
     NCPformat *Astore;
     double    *a;
-    int       *asub;
-    int       *xa_begin, *xa_end;
-    int	      krep, chperm, chmark, chrep, oldrep, kchild, myfnz;
-    int       k, krow, kmark, kperm;
-    int       xdfs, maxdfs, kpar;
-    int       jj;	   /* index through each column in the panel */
-    int       *marker1;	   /* marker1[jj] >= jcol if vertex jj was visited 
+    long long       *asub;
+    long long       *xa_begin, *xa_end;
+    long long	      krep, chperm, chmark, chrep, oldrep, kchild, myfnz;
+    long long       k, krow, kmark, kperm;
+    long long       xdfs, maxdfs, kpar;
+    long long       jj;	   /* index through each column in the panel */
+    long long       *marker1;	   /* marker1[jj] >= jcol if vertex jj was visited 
 			      by a previous column within this panel.   */
-    int       *repfnz_col; /* start of each column in the panel */
+    long long       *repfnz_col; /* start of each column in the panel */
     double    *dense_col;  /* start of each column in the panel */
-    int       nextl_col;   /* next available position in panel_lsub[*,jj] */
-    int       *xsup, *supno;
-    int       *lsub, *xlsub;
+    long long       nextl_col;   /* next available position in panel_lsub[*,jj] */
+    long long       *xsup, *supno;
+    long long       *lsub, *xlsub;
 
     /* Initialize pointers */
     Astore     = A->Store;

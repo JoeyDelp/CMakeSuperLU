@@ -74,7 +74,7 @@ double dlangs(char *norm, SuperMatrix *A)
     /* Local variables */
     NCformat *Astore;
     double   *Aval;
-    int      i, j, irow;
+    long long      i, j, irow;
     double   value, sum;
     double   *rwork;
 

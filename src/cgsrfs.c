@@ -68,12 +68,12 @@ at the top-level directory.
  *           cgstrf(). Use column-wise storage scheme, 
  *           i.e., U has types: Stype = SLU_NC, Dtype = SLU_C, Mtype = SLU_TRU.
  *
- *   perm_c  (input) int*, dimension (A->ncol)
+ *   perm_c  (input) long long*, dimension (A->ncol)
  *	     Column permutation vector, which defines the 
  *           permutation matrix Pc; perm_c[i] = j means column i of A is 
  *           in position j in A*Pc.
  *
- *   perm_r  (input) int*, dimension (A->nrow)
+ *   perm_r  (input) long long*, dimension (A->nrow)
  *           Row permutation vector, which defines the permutation matrix Pr;
  *           perm_r[i] = j means row i of A is in position j in Pr*A.
  *
@@ -126,7 +126,7 @@ at the top-level directory.
  *            Record the statistics on runtime and floating-point operation count.
  *            See util.h for the definition of 'SuperLUStat_t'.
  *
- *   info    (output) int*   
+ *   info    (output) long long*   
  *           = 0:  successful exit   
  *            < 0:  if INFO = -i, the i-th argument had an illegal value   
  *
@@ -139,16 +139,16 @@ at the top-level directory.
  */
 void
 cgsrfs(trans_t trans, SuperMatrix *A, SuperMatrix *L, SuperMatrix *U,
-       int *perm_c, int *perm_r, char *equed, float *R, float *C,
+       long long *perm_c, long long *perm_r, char *equed, float *R, float *C,
        SuperMatrix *B, SuperMatrix *X, float *ferr, float *berr,
-       SuperLUStat_t *stat, int *info)
+       SuperLUStat_t *stat, long long *info)
 {
 
 
 #define ITMAX 5
     
     /* Table of constant values */
-    int    ione = 1;
+    long long    ione = 1;
     complex ndone = {-1., 0.};
     complex done = {1., 0.};
     
@@ -158,25 +158,25 @@ cgsrfs(trans_t trans, SuperMatrix *A, SuperMatrix *L, SuperMatrix *U,
     SuperMatrix Bjcol;
     DNformat *Bstore, *Xstore, *Bjcol_store;
     complex   *Bmat, *Xmat, *Bptr, *Xptr;
-    int      kase;
+    long long      kase;
     float   safe1, safe2;
-    int      i, j, k, irow, nz, count, notran, rowequ, colequ;
-    int      ldb, ldx, nrhs;
+    long long      i, j, k, irow, nz, count, notran, rowequ, colequ;
+    long long      ldb, ldx, nrhs;
     float   s, xk, lstres, eps, safmin;
     char     transc[1];
     trans_t  transt;
     complex   *work;
     float   *rwork;
-    int      *iwork;
-    int      isave[3];
+    long long      *iwork;
+    long long      isave[3];
 
-    extern int clacon2_(int *, complex *, complex *, float *, int *, int []);
+    extern long long clacon2_(long long *, complex *, complex *, float *, long long *, long long []);
 #ifdef _CRAY
-    extern int CCOPY(int *, complex *, int *, complex *, int *);
-    extern int CSAXPY(int *, complex *, complex *, int *, complex *, int *);
+    extern long long CCOPY(long long *, complex *, long long *, complex *, long long *);
+    extern long long CSAXPY(long long *, complex *, complex *, long long *, complex *, long long *);
 #else
-    extern int ccopy_(int *, complex *, int *, complex *, int *);
-    extern int caxpy_(int *, complex *, complex *, int *, complex *, int *);
+    extern long long ccopy_(long long *, complex *, long long *, complex *, long long *);
+    extern long long caxpy_(long long *, complex *, complex *, long long *, complex *, long long *);
 #endif
 
     Astore = A->Store;

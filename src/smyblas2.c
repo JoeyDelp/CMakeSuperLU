@@ -34,13 +34,13 @@ at the top-level directory.
  * triangular matrix is stored in a 2D array M(1:nrow,1:ncol). 
  * The solution will be returned in the rhs vector.
  */
-void slsolve ( int ldm, int ncol, float *M, float *rhs )
+void slsolve ( long long ldm, long long ncol, float *M, float *rhs )
 {
-    int k;
+    long long k;
     float x0, x1, x2, x3, x4, x5, x6, x7;
     float *M0;
     register float *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-    register int firstcol = 0;
+    register long long firstcol = 0;
 
     M0 = &M[0];
 
@@ -134,13 +134,13 @@ void slsolve ( int ldm, int ncol, float *M, float *rhs )
  */
 void
 susolve ( ldm, ncol, M, rhs )
-int ldm;	/* in */
-int ncol;	/* in */
+long long ldm;	/* in */
+long long ncol;	/* in */
 float *M;	/* in */
 float *rhs;	/* modified */
 {
     float xj;
-    int jcol, j, irow;
+    long long jcol, j, irow;
 
     jcol = ncol - 1;
 
@@ -164,9 +164,9 @@ float *rhs;	/* modified */
  */
 void smatvec ( ldm, nrow, ncol, M, vec, Mxvec )
 
-int ldm;	/* in -- leading dimension of M */
-int nrow;	/* in */ 
-int ncol;	/* in */
+long long ldm;	/* in -- leading dimension of M */
+long long nrow;	/* in */ 
+long long ncol;	/* in */
 float *M;	/* in */
 float *vec;	/* in */
 float *Mxvec;	/* in/out */
@@ -175,8 +175,8 @@ float *Mxvec;	/* in/out */
     float vi0, vi1, vi2, vi3, vi4, vi5, vi6, vi7;
     float *M0;
     register float *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-    register int firstcol = 0;
-    int k;
+    register long long firstcol = 0;
+    long long k;
 
     M0 = &M[0];
     while ( firstcol < ncol - 7 ) {	/* Do 8 columns */

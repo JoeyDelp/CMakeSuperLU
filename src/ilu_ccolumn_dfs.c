@@ -57,36 +57,36 @@ at the top-level directory.
  *   > 0  number of bytes allocated when run out of space.
  * </pre>
  */
-int
+long long
 ilu_ccolumn_dfs(
-	   const int  m,	 /* in - number of rows in the matrix */
-	   const int  jcol,	 /* in */
-	   int	      *perm_r,	 /* in */
-	   int	      *nseg,	 /* modified - with new segments appended */
-	   int	      *lsub_col, /* in - defines the RHS vector to start the
+	   const long long  m,	 /* in - number of rows in the matrix */
+	   const long long  jcol,	 /* in */
+	   long long	      *perm_r,	 /* in */
+	   long long	      *nseg,	 /* modified - with new segments appended */
+	   long long	      *lsub_col, /* in - defines the RHS vector to start the
 				    dfs */
-	   int	      *segrep,	 /* modified - with new segments appended */
-	   int	      *repfnz,	 /* modified */
-	   int	      *marker,	 /* modified */
-	   int	      *parent,	 /* working array */
-	   int	      *xplore,	 /* working array */
+	   long long	      *segrep,	 /* modified - with new segments appended */
+	   long long	      *repfnz,	 /* modified */
+	   long long	      *marker,	 /* modified */
+	   long long	      *parent,	 /* working array */
+	   long long	      *xplore,	 /* working array */
 	   GlobalLU_t *Glu	 /* modified */
 	   )
 {
 
-    int     jcolp1, jcolm1, jsuper, nsuper, nextl;
-    int     k, krep, krow, kmark, kperm;
-    int     *marker2;		/* Used for small panel LU */
-    int     fsupc;		/* First column of a snode */
-    int     myfnz;		/* First nonz column of a U-segment */
-    int     chperm, chmark, chrep, kchild;
-    int     xdfs, maxdfs, kpar, oldrep;
-    int     jptr, jm1ptr;
-    int     ito, ifrom; 	/* Used to compress row subscripts */
-    int     mem_error;
-    int     *xsup, *supno, *lsub, *xlsub;
-    int     nzlmax;
-    int     maxsuper;
+    long long     jcolp1, jcolm1, jsuper, nsuper, nextl;
+    long long     k, krep, krow, kmark, kperm;
+    long long     *marker2;		/* Used for small panel LU */
+    long long     fsupc;		/* First column of a snode */
+    long long     myfnz;		/* First nonz column of a U-segment */
+    long long     chperm, chmark, chrep, kchild;
+    long long     xdfs, maxdfs, kpar, oldrep;
+    long long     jptr, jm1ptr;
+    long long     ito, ifrom; 	/* Used to compress row subscripts */
+    long long     mem_error;
+    long long     *xsup, *supno, *lsub, *xlsub;
+    long long     nzlmax;
+    long long     maxsuper;
 
     xsup    = Glu->xsup;
     supno   = Glu->supno;

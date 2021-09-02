@@ -62,16 +62,16 @@ at the top-level directory.
  *          (A->nrow, A->ncol). The type of A can be:
  *          Stype = SLU_NCP; Dtype = SLU_D; Mtype = SLU_GE.
  *
- * relax    (input) int
+ * relax    (input) long long
  *          To control degree of relaxing supernodes. If the number
  *          of nodes (columns) in a subtree of the elimination tree is less
  *          than relax, this subtree is considered as one supernode,
  *          regardless of the row structures of those columns.
  *
- * panel_size (input) int
+ * panel_size (input) long long
  *          A panel consists of at most panel_size consecutive columns.
  *
- * etree    (input) int*, dimension (A->ncol)
+ * etree    (input) long long*, dimension (A->ncol)
  *          Elimination tree of A'*A.
  *          Note: etree is a vector of parent pointers for a forest whose
  *          vertices are the integers 0 to A->ncol-1; etree[root]==A->ncol.
@@ -82,7 +82,7 @@ at the top-level directory.
  *          User-supplied work space and space for the output data structures.
  *          Not referenced if lwork = 0;
  *
- * lwork   (input) int
+ * lwork   (input) long long
  *         Specifies the size of work array in bytes.
  *         = 0:  allocate space internally by system malloc;
  *         > 0:  use user-supplied work array of length lwork in bytes,
@@ -91,7 +91,7 @@ at the top-level directory.
  *               performing the factorization, and returns it in
  *               *info; no other side effects.
  *
- * perm_c   (input) int*, dimension (A->ncol)
+ * perm_c   (input) long long*, dimension (A->ncol)
  *	    Column permutation vector, which defines the 
  *          permutation matrix Pc; perm_c[i] = j means column i of A is 
  *          in position j in A*Pc.
@@ -99,7 +99,7 @@ at the top-level directory.
  *          row subscripts of A, so that diagonal threshold pivoting
  *          can find the diagonal of A, rather than that of A*Pc.
  *
- * perm_r   (input/output) int*, dimension (A->nrow)
+ * perm_r   (input/output) long long*, dimension (A->nrow)
  *          Row permutation vector which defines the permutation matrix Pr,
  *          perm_r[i] = j means row i of A is in position j in Pr*A.
  *          If options->Fact == SamePattern_SameRowPerm, the pivoting routine
@@ -134,7 +134,7 @@ at the top-level directory.
  *          Record the statistics on runtime and floating-point operation count.
  *          See slu_util.h for the definition of 'SuperLUStat_t'.
  *
- * info     (output) int*
+ * info     (output) long long*
  *          = 0: successful exit
  *          < 0: if info = -i, the i-th argument had an illegal value
  *          > 0: if info = i, and i is
@@ -198,47 +198,47 @@ at the top-level directory.
 
 void
 dgstrf (superlu_options_t *options, SuperMatrix *A,
-        int relax, int panel_size, int *etree, void *work, int lwork,
-        int *perm_c, int *perm_r, SuperMatrix *L, SuperMatrix *U,
+        long long relax, long long panel_size, long long *etree, void *work, long long lwork,
+        long long *perm_c, long long *perm_r, SuperMatrix *L, SuperMatrix *U,
     	GlobalLU_t *Glu, /* persistent to facilitate multiple factorizations */
-        SuperLUStat_t *stat, int *info)
+        SuperLUStat_t *stat, long long *info)
 {
     /* Local working arrays */
     NCPformat *Astore;
-    int       *iperm_r = NULL; /* inverse of perm_r; used when 
+    long long       *iperm_r = NULL; /* inverse of perm_r; used when 
                                   options->Fact == SamePattern_SameRowPerm */
-    int       *iperm_c; /* inverse of perm_c */
-    int       *iwork;
+    long long       *iperm_c; /* inverse of perm_c */
+    long long       *iwork;
     double    *dwork;
-    int	      *segrep, *repfnz, *parent, *xplore;
-    int	      *panel_lsub; /* dense[]/panel_lsub[] pair forms a w-wide SPA */
-    int	      *xprune;
-    int	      *marker;
+    long long	      *segrep, *repfnz, *parent, *xplore;
+    long long	      *panel_lsub; /* dense[]/panel_lsub[] pair forms a w-wide SPA */
+    long long	      *xprune;
+    long long	      *marker;
     double    *dense, *tempv;
-    int       *relax_end;
+    long long       *relax_end;
     double    *a;
-    int       *asub;
-    int       *xa_begin, *xa_end;
-    int       *xsup, *supno;
-    int       *xlsub, *xlusup, *xusub;
-    int       nzlumax;
+    long long       *asub;
+    long long       *xa_begin, *xa_end;
+    long long       *xsup, *supno;
+    long long       *xlsub, *xlusup, *xusub;
+    long long       nzlumax;
     double fill_ratio = sp_ienv(6);  /* estimated fill ratio */
 
     /* Local scalars */
     fact_t    fact = options->Fact;
     double    diag_pivot_thresh = options->DiagPivotThresh;
-    int       pivrow;   /* pivotal row number in the original matrix A */
-    int       nseg1;	/* no of segments in U-column above panel row jcol */
-    int       nseg;	/* no of segments in each U-column */
-    register int jcol;	
-    register int kcol;	/* end column of a relaxed snode */
-    register int icol;
-    register int i, k, jj, new_next, iinfo;
-    int       m, n, min_mn, jsupno, fsupc, nextlu, nextu;
-    int       w_def;	/* upper bound on panel width */
-    int       usepr, iperm_r_allocated = 0;
-    int       nnzL, nnzU;
-    int       *panel_histo = stat->panel_histo;
+    long long       pivrow;   /* pivotal row number in the original matrix A */
+    long long       nseg1;	/* no of segments in U-column above panel row jcol */
+    long long       nseg;	/* no of segments in each U-column */
+    register long long jcol;	
+    register long long kcol;	/* end column of a relaxed snode */
+    register long long icol;
+    register long long i, k, jj, new_next, iinfo;
+    long long       m, n, min_mn, jsupno, fsupc, nextlu, nextu;
+    long long       w_def;	/* upper bound on panel width */
+    long long       usepr, iperm_r_allocated = 0;
+    long long       nnzL, nnzU;
+    long long       *panel_histo = stat->panel_histo;
     flops_t   *ops = stat->ops;
 
     iinfo    = 0;
@@ -269,15 +269,15 @@ dgstrf (superlu_options_t *options, SuperMatrix *A,
     usepr = (fact == SamePattern_SameRowPerm);
     if ( usepr ) {
 	/* Compute the inverse of perm_r */
-	iperm_r = (int *) intMalloc(m);
+	iperm_r = (long long *) intMalloc(m);
 	for (k = 0; k < m; ++k) iperm_r[perm_r[k]] = k;
 	iperm_r_allocated = 1;
     }
-    iperm_c = (int *) intMalloc(n);
+    iperm_c = (long long *) intMalloc(n);
     for (k = 0; k < n; ++k) iperm_c[perm_c[k]] = k;
 
     /* Identify relaxed snodes */
-    relax_end = (int *) intMalloc(n);
+    relax_end = (long long *) intMalloc(n);
     if ( options->SymmetricMode == YES ) {
         heap_relax_snode(n, etree, relax, marker, relax_end); 
     } else {

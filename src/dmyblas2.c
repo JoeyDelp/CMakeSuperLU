@@ -34,13 +34,13 @@ at the top-level directory.
  * triangular matrix is stored in a 2D array M(1:nrow,1:ncol). 
  * The solution will be returned in the rhs vector.
  */
-void dlsolve ( int ldm, int ncol, double *M, double *rhs )
+void dlsolve ( long long ldm, long long ncol, double *M, double *rhs )
 {
-    int k;
+    long long k;
     double x0, x1, x2, x3, x4, x5, x6, x7;
     double *M0;
     register double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-    register int firstcol = 0;
+    register long long firstcol = 0;
 
     M0 = &M[0];
 
@@ -134,13 +134,13 @@ void dlsolve ( int ldm, int ncol, double *M, double *rhs )
  */
 void
 dusolve ( ldm, ncol, M, rhs )
-int ldm;	/* in */
-int ncol;	/* in */
+long long ldm;	/* in */
+long long ncol;	/* in */
 double *M;	/* in */
 double *rhs;	/* modified */
 {
     double xj;
-    int jcol, j, irow;
+    long long jcol, j, irow;
 
     jcol = ncol - 1;
 
@@ -164,9 +164,9 @@ double *rhs;	/* modified */
  */
 void dmatvec ( ldm, nrow, ncol, M, vec, Mxvec )
 
-int ldm;	/* in -- leading dimension of M */
-int nrow;	/* in */ 
-int ncol;	/* in */
+long long ldm;	/* in -- leading dimension of M */
+long long nrow;	/* in */ 
+long long ncol;	/* in */
 double *M;	/* in */
 double *vec;	/* in */
 double *Mxvec;	/* in/out */
@@ -175,8 +175,8 @@ double *Mxvec;	/* in/out */
     double vi0, vi1, vi2, vi3, vi4, vi5, vi6, vi7;
     double *M0;
     register double *Mki0, *Mki1, *Mki2, *Mki3, *Mki4, *Mki5, *Mki6, *Mki7;
-    register int firstcol = 0;
-    int k;
+    register long long firstcol = 0;
+    long long k;
 
     M0 = &M[0];
     while ( firstcol < ncol - 7 ) {	/* Do 8 columns */

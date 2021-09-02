@@ -51,14 +51,14 @@ at the top-level directory.
     ===================================================================== 
 </pre>
 */  
-double dzsum1_slu(int *n, doublecomplex *cx, int *incx)
+double dzsum1_slu(long long *n, doublecomplex *cx, long long *incx)
 {
 
     /* Builtin functions */
     double z_abs(doublecomplex *);
     
     /* Local variables */
-    int i, nincx;
+    long long i, nincx;
     double stemp;
 
 

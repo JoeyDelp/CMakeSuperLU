@@ -35,13 +35,13 @@ at the top-level directory.
  * triangular matrix is stored in a 2D array M(1:nrow,1:ncol). 
  * The solution will be returned in the rhs vector.
  */
-void clsolve ( int ldm, int ncol, complex *M, complex *rhs )
+void clsolve ( long long ldm, long long ncol, complex *M, complex *rhs )
 {
-    int k;
+    long long k;
     complex x0, x1, x2, x3, temp;
     complex *M0;
     complex *Mki0, *Mki1, *Mki2, *Mki3;
-    register int firstcol = 0;
+    register long long firstcol = 0;
 
     M0 = &M[0];
 
@@ -114,13 +114,13 @@ void clsolve ( int ldm, int ncol, complex *M, complex *rhs )
  */
 void
 cusolve ( ldm, ncol, M, rhs )
-int ldm;	/* in */
-int ncol;	/* in */
+long long ldm;	/* in */
+long long ncol;	/* in */
 complex *M;	/* in */
 complex *rhs;	/* modified */
 {
     complex xj, temp;
-    int jcol, j, irow;
+    long long jcol, j, irow;
 
     jcol = ncol - 1;
 
@@ -145,9 +145,9 @@ complex *rhs;	/* modified */
  * The input matrix is M(1:nrow,1:ncol); The product is returned in Mxvec[].
  */
 void cmatvec ( ldm, nrow, ncol, M, vec, Mxvec )
-int ldm;	/* in -- leading dimension of M */
-int nrow;	/* in */ 
-int ncol;	/* in */
+long long ldm;	/* in -- leading dimension of M */
+long long nrow;	/* in */ 
+long long ncol;	/* in */
 complex *M;	/* in */
 complex *vec;	/* in */
 complex *Mxvec;	/* in/out */
@@ -155,8 +155,8 @@ complex *Mxvec;	/* in/out */
     complex vi0, vi1, vi2, vi3;
     complex *M0, temp;
     complex *Mki0, *Mki1, *Mki2, *Mki3;
-    register int firstcol = 0;
-    int k;
+    register long long firstcol = 0;
+    long long k;
 
     M0 = &M[0];
 

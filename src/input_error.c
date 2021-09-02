@@ -36,13 +36,13 @@ at the top-level directory.
  * srname  (input) character*6
  *         The name of the routine which called INPUT_ERROR.
  *
- * info    (input) int
+ * info    (input) long long
  *         The position of the invalid parameter in the parameter list   
  *         of the calling routine.
  *
  * </pre>
  */
-int input_error(char *srname, int *info)
+long long input_error(char *srname, long long *info)
 {
     printf("** On entry to %6s, parameter number %2d had an illegal value\n",
 		srname, *info);

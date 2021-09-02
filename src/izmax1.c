@@ -52,18 +52,18 @@ at the top-level directory.
 </pre>
 */  
 
-int
-izmax1_slu(int *n, doublecomplex *cx, int *incx)
+long long
+izmax1_slu(long long *n, doublecomplex *cx, long long *incx)
 {
 
 
     /* System generated locals */
-    int ret_val, i__1, i__2;
+    long long ret_val, i__1, i__2;
     double d__1;
     
     /* Local variables */
     double smax;
-    int i, ix;
+    long long i, ix;
 
 #define CX(I) cx[(I)-1]
 

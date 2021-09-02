@@ -50,15 +50,15 @@ at the top-level directory.
     ===================================================================== 
 </pre>
 */
-double scsum1_slu(int *n, complex *cx, int *incx)
+double scsum1_slu(long long *n, complex *cx, long long *incx)
 {
     /* System generated locals */
-    int i__1, i__2;
+    long long i__1, i__2;
     float ret_val;
     /* Builtin functions */
     double c_abs(complex *);
     /* Local variables */
-    int i, nincx;
+    long long i, nincx;
     float stemp;
 
 

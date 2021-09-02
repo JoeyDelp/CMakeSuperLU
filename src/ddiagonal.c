@@ -21,19 +21,19 @@ at the top-level directory.
 
 #include "superlu/slu_ddefs.h"
 
-int dfill_diag(int n, NCformat *Astore)
+long long dfill_diag(long long n, NCformat *Astore)
 /* fill explicit zeros on the diagonal entries, so that the matrix is not
    structurally singular. */
 {
     double *nzval = (double *)Astore->nzval;
-    int *rowind = Astore->rowind;
-    int *colptr = Astore->colptr;
-    int nnz = colptr[n];
-    int fill = 0;
+    long long *rowind = Astore->rowind;
+    long long *colptr = Astore->colptr;
+    long long nnz = colptr[n];
+    long long fill = 0;
     double *nzval_new;
     double zero = 0.0;
-    int *rowind_new;
-    int i, j, diag;
+    long long *rowind_new;
+    long long i, j, diag;
 
     for (i = 0; i < n; i++)
     {
@@ -72,17 +72,17 @@ int dfill_diag(int n, NCformat *Astore)
     return fill;
 }
 
-int ddominate(int n, NCformat *Astore)
+long long ddominate(long long n, NCformat *Astore)
 /* make the matrix diagonally dominant */
 {
     double *nzval = (double *)Astore->nzval;
-    int *rowind = Astore->rowind;
-    int *colptr = Astore->colptr;
-    int nnz = colptr[n];
-    int fill = 0;
+    long long *rowind = Astore->rowind;
+    long long *colptr = Astore->colptr;
+    long long nnz = colptr[n];
+    long long fill = 0;
     double *nzval_new;
-    int *rowind_new;
-    int i, j, diag;
+    long long *rowind_new;
+    long long i, j, diag;
     double s;
 
     for (i = 0; i < n; i++)

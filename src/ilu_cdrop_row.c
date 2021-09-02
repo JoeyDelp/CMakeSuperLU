@@ -23,19 +23,19 @@ at the top-level directory.
 #include <stdlib.h>
 #include "superlu/slu_cdefs.h"
 
-extern void cswap_(int *, complex [], int *, complex [], int *);
-extern void caxpy_(int *, complex *, complex [], int *, complex [], int *);
-extern void ccopy_(int *, complex [], int *, complex [], int *);
-extern float scasum_(int *, complex *, int *);
-extern float scnrm2_(int *, complex *, int *);
-extern void scopy_(int *, float [], int *, float [], int *);
-extern double dnrm2_(int *, double [], int *);
-extern int icamax_(int *, complex [], int *);
+extern void cswap_(long long *, complex [], long long *, complex [], long long *);
+extern void caxpy_(long long *, complex *, complex [], long long *, complex [], long long *);
+extern void ccopy_(long long *, complex [], long long *, complex [], long long *);
+extern float scasum_(long long *, complex *, long long *);
+extern float scnrm2_(long long *, complex *, long long *);
+extern void scopy_(long long *, float [], long long *, float [], long long *);
+extern double dnrm2_(long long *, double [], long long *);
+extern long long icamax_(long long *, complex [], long long *);
 
 static float *A;  /* used in _compare_ only */
-static int _compare_(const void *a, const void *b)
+static long long _compare_(const void *a, const void *b)
 {
-    register int *x = (int *)a, *y = (int *)b;
+    register long long *x = (long long *)a, *y = (long long *)b;
     if (A[*x] - A[*y] > 0.0) return -1;
     else if (A[*x] - A[*y] < 0.0) return 1;
     else return 0;
@@ -49,13 +49,13 @@ static int _compare_(const void *a, const void *b)
  *    supernode (L-part only).
  * </pre>
  */
-int ilu_cdrop_row(
+long long ilu_cdrop_row(
 	superlu_options_t *options, /* options */
-	int    first,	    /* index of the first column in the supernode */
-	int    last,	    /* index of the last column in the supernode */
+	long long    first,	    /* index of the first column in the supernode */
+	long long    last,	    /* index of the last column in the supernode */
 	double drop_tol,    /* dropping parameter */
-	int    quota,	    /* maximum nonzero entries allowed */
-	int    *nnzLj,	    /* in/out number of nonzeros in L(:, 1:last) */
+	long long    quota,	    /* maximum nonzero entries allowed */
+	long long    *nnzLj,	    /* in/out number of nonzeros in L(:, 1:last) */
 	double *fill_tol,   /* in/out - on exit, fill_tol=-num_zero_pivots,
 			     * does not change if options->ILU_MILU != SMILU1 */
 	GlobalLU_t *Glu,    /* modified */
@@ -64,31 +64,31 @@ int ilu_cdrop_row(
 			     * the number of rows in the supernode */
 	float swork2[], /* working space with the same size as swork[],
 			     * used only by the second dropping rule */
-	int    lastc	    /* if lastc == 0, there is nothing after the
+	long long    lastc	    /* if lastc == 0, there is nothing after the
 			     * working supernode [first:last];
 			     * if lastc == 1, there is one more column after
 			     * the working supernode. */ )
 {
-    register int i, j, k, m1;
-    register int nzlc; /* number of nonzeros in column last+1 */
-    register int xlusup_first, xlsub_first;
-    int m, n; /* m x n is the size of the supernode */
-    int r = 0; /* number of dropped rows */
+    register long long i, j, k, m1;
+    register long long nzlc; /* number of nonzeros in column last+1 */
+    register long long xlusup_first, xlsub_first;
+    long long m, n; /* m x n is the size of the supernode */
+    long long r = 0; /* number of dropped rows */
     register float *temp;
     register complex *lusup = (complex *) Glu->lusup;
-    register int *lsub = Glu->lsub;
-    register int *xlsub = Glu->xlsub;
-    register int *xlusup = Glu->xlusup;
+    register long long *lsub = Glu->lsub;
+    register long long *xlsub = Glu->xlsub;
+    register long long *xlusup = Glu->xlusup;
     register float d_max = 0.0, d_min = 1.0;
-    int    drop_rule = options->ILU_DropRule;
+    long long    drop_rule = options->ILU_DropRule;
     milu_t milu = options->ILU_MILU;
     norm_t nrm = options->ILU_Norm;
     complex zero = {0.0, 0.0};
     complex one = {1.0, 0.0};
     complex none = {-1.0, 0.0};
-    int i_1 = 1;
-    int inc_diag; /* inc_diag = m + 1 */
-    int nzp = 0;  /* number of zero pivots */
+    long long i_1 = 1;
+    long long inc_diag; /* inc_diag = m + 1 */
+    long long nzp = 0;  /* number of zero pivots */
     float alpha = pow((double)(Glu->n), -1.0 / options->ILU_MILU_Dim);
 
     xlusup_first = xlusup[first];
@@ -193,14 +193,14 @@ int ilu_cdrop_row(
 	    }
 	    else /* by quick select */
 	    {
-		int len = m1 - n + 1;
+		long long len = m1 - n + 1;
 		scopy_(&len, swork, &i_1, swork2, &i_1);
 		tol = sqselect(len, swork2, quota - n);
 #if 0
-		register int *itemp = iwork - n;
+		register long long *itemp = iwork - n;
 		A = temp;
 		for (i = n; i <= m1; i++) itemp[i] = i;
-		qsort(iwork, m1 - n + 1, sizeof(int), _compare_);
+		qsort(iwork, m1 - n + 1, sizeof(long long), _compare_);
 		tol = temp[itemp[quota]];
 #endif
 	    }
@@ -210,7 +210,7 @@ int ilu_cdrop_row(
 	{
 	    if (temp[i] <= tol)
 	    {
-		register int j;
+		register long long j;
 		r++;
 		/* drop the current row and move the last undropped row here */
 		if (r > 1) /* add to last row */
@@ -269,7 +269,7 @@ int ilu_cdrop_row(
     /* add dropped entries to the diagnal */
     if (milu != SILU)
     {
-	register int j;
+	register long long j;
 	complex t;
 	float omega;
 	for (j = 0; j < n; j++)
@@ -324,7 +324,7 @@ int ilu_cdrop_row(
     m1 = m - r;
     for (j = 1; j < n; j++)
     {
-	register int tmp1, tmp2;
+	register long long tmp1, tmp2;
 	tmp1 = xlusup_first + j * m1;
 	tmp2 = xlusup_first + j * m;
 	for (i = 0; i < m1; i++)

@@ -72,7 +72,7 @@ at the top-level directory.
  *           The reciprocal of the condition number of the matrix A,   
  *           computed as RCOND = 1/(norm(A) * norm(inv(A))).
  *	    
- *    INFO    (output) int*
+ *    INFO    (output) long long*
  *           = 0:  successful exit   
  *           < 0:  if INFO = -i, the i-th argument had an illegal value   
  *
@@ -82,19 +82,19 @@ at the top-level directory.
 
 void
 sgscon(char *norm, SuperMatrix *L, SuperMatrix *U,
-       float anorm, float *rcond, SuperLUStat_t *stat, int *info)
+       float anorm, float *rcond, SuperLUStat_t *stat, long long *info)
 {
 
 
     /* Local variables */
-    int    kase, kase1, onenrm, i;
+    long long    kase, kase1, onenrm, i;
     float ainvnm;
     float *work;
-    int    *iwork;
-    int    isave[3];
-    extern int srscl_(int *, float *, float *, int *);
+    long long    *iwork;
+    long long    isave[3];
+    extern long long srscl_(long long *, float *, float *, long long *);
 
-    extern int slacon2_(int *, float *, float *, int *, float *, int *, int []);
+    extern long long slacon2_(long long *, float *, float *, long long *, float *, long long *, long long []);
 
     
     /* Test the input parameters. */

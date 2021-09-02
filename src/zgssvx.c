@@ -157,7 +157,7 @@ at the top-level directory.
  *           equed = 'C':  transpose(A) := transpose(A) * diag(C)
  *           equed = 'B':  transpose(A) := diag(R) * transpose(A) * diag(C).
  *
- * perm_c  (input/output) int*
+ * perm_c  (input/output) long long*
  *	   If A->Stype = SLU_NC, Column permutation vector of size A->ncol,
  *         which defines the permutation matrix Pc; perm_c[i] = j means
  *         column i of A is in position j in A*Pc.
@@ -170,7 +170,7 @@ at the top-level directory.
  *         which describes permutation of columns of transpose(A) 
  *         (rows of A) as described above.
  * 
- * perm_r  (input/output) int*
+ * perm_r  (input/output) long long*
  *         If A->Stype = SLU_NC, row permutation vector of size A->nrow, 
  *         which defines the permutation matrix Pr, and is determined
  *         by partial pivoting.  perm_r[i] = j means row i of A is in 
@@ -187,7 +187,7 @@ at the top-level directory.
  *         threshold pivoting.
  *         Otherwise, perm_r is output argument.
  * 
- * etree   (input/output) int*,  dimension (A->ncol)
+ * etree   (input/output) long long*,  dimension (A->ncol)
  *         Elimination tree of Pc'*A'*A*Pc.
  *         If options->Fact != FACTORED and options->Fact != DOFACT,
  *         etree is an input argument, otherwise it is an output argument.
@@ -243,7 +243,7 @@ at the top-level directory.
  *         to hold data structures for factors L and U.
  *         On exit, if fact is not 'F', L and U point to this array.
  *
- * lwork   (input) int
+ * lwork   (input) long long
  *         Specifies the size of work array in bytes.
  *         = 0:  allocate space internally by system malloc;
  *         > 0:  use user-supplied work array of length lwork in bytes,
@@ -327,14 +327,14 @@ at the top-level directory.
  *           The amount of space used in bytes for L\U data structures.
  *         - total_needed (float)
  *           The amount of space needed in bytes to perform factorization.
- *         - expansions (int)
+ *         - expansions (long long)
  *           The number of memory expansions during the LU factorization.
  *
  * stat   (output) SuperLUStat_t*
  *        Record the statistics on runtime and floating-point operation count.
  *        See slu_util.h for the definition of 'SuperLUStat_t'.
  *
- * info    (output) int*
+ * info    (output) long long*
  *         = 0: successful exit   
  *         < 0: if info = -i, the i-th argument had an illegal value   
  *         > 0: if info = i, and i is   
@@ -354,26 +354,26 @@ at the top-level directory.
  */
 
 void
-zgssvx(superlu_options_t *options, SuperMatrix *A, int *perm_c, int *perm_r,
-       int *etree, char *equed, double *R, double *C,
-       SuperMatrix *L, SuperMatrix *U, void *work, int lwork,
+zgssvx(superlu_options_t *options, SuperMatrix *A, long long *perm_c, long long *perm_r,
+       long long *etree, char *equed, double *R, double *C,
+       SuperMatrix *L, SuperMatrix *U, void *work, long long lwork,
        SuperMatrix *B, SuperMatrix *X, double *recip_pivot_growth, 
        double *rcond, double *ferr, double *berr, 
-       GlobalLU_t *Glu, mem_usage_t *mem_usage, SuperLUStat_t *stat, int *info )
+       GlobalLU_t *Glu, mem_usage_t *mem_usage, SuperLUStat_t *stat, long long *info )
 {
 
 
     DNformat  *Bstore, *Xstore;
     doublecomplex    *Bmat, *Xmat;
-    int       ldb, ldx, nrhs;
+    long long       ldb, ldx, nrhs;
     SuperMatrix *AA;/* A in SLU_NC format used by the factorization routine.*/
     SuperMatrix AC; /* Matrix postmultiplied by Pc */
-    int       colequ, equil, nofact, notran, rowequ, permc_spec;
+    long long       colequ, equil, nofact, notran, rowequ, permc_spec;
     trans_t   trant;
     char      norm[1];
-    int       i, j, info1;
+    long long       i, j, info1;
     double    amax, anorm, bignum, smlnum, colcnd, rowcnd, rcmax, rcmin;
-    int       relax, panel_size;
+    long long       relax, panel_size;
     double    diag_pivot_thresh;
     double    t0;      /* temporary time */
     double    *utime;

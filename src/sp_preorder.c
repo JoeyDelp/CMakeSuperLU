@@ -47,7 +47,7 @@ at the top-level directory.
  *         Stype = NC or SLU_NCP; Mtype = SLU_GE.
  *         In the future, more general A may be handled.
  *
- * perm_c  (input/output) int*
+ * perm_c  (input/output) long long*
  *	   Column permutation vector of size A->ncol, which defines the 
  *         permutation matrix Pc; perm_c[i] = j means column i of A is 
  *         in position j in A*Pc.
@@ -55,7 +55,7 @@ at the top-level directory.
  *         On output, it is changed according to a postorder of etree.
  *         Otherwise, perm_c is input.
  *
- * etree   (input/output) int*
+ * etree   (input/output) long long*
  *         Elimination tree of Pc'*A'*A*Pc, dimension A->ncol.
  *         If options->Fact == DOFACT, etree is an output argument,
  *         otherwise it is an input argument.
@@ -69,13 +69,13 @@ at the top-level directory.
  * </pre>
  */
 void
-sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c, 
-	    int *etree, SuperMatrix *AC)
+sp_preorder(superlu_options_t *options,  SuperMatrix *A, long long *perm_c, 
+	    long long *etree, SuperMatrix *AC)
 {
     NCformat  *Astore;
     NCPformat *ACstore;
-    int       *iwork, *post;
-    register  int n, i;
+    long long       *iwork, *post;
+    register  long long n, i;
 
     n = A->ncol;
     
@@ -92,9 +92,9 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
     ACstore->nnz    = Astore->nnz;
     ACstore->nzval  = Astore->nzval;
     ACstore->rowind = Astore->rowind;
-    ACstore->colbeg = (int*) SUPERLU_MALLOC(n*sizeof(int));
+    ACstore->colbeg = (long long*) SUPERLU_MALLOC(n*sizeof(long long));
     if ( !(ACstore->colbeg) ) ABORT("SUPERLU_MALLOC fails for ACstore->colbeg");
-    ACstore->colend = (int*) SUPERLU_MALLOC(n*sizeof(int));
+    ACstore->colend = (long long*) SUPERLU_MALLOC(n*sizeof(long long));
     if ( !(ACstore->colend) ) ABORT("SUPERLU_MALLOC fails for ACstore->colend");
 
 #ifdef DEBUG
@@ -113,8 +113,8 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
         /*--------------------------------------------
 	  COMPUTE THE ETREE OF Pc*(A'+A)*Pc'.
 	  --------------------------------------------*/
-        int *b_colptr, *b_rowind, bnz, j;
-	int *c_colbeg, *c_colend;
+        long long *b_colptr, *b_rowind, bnz, j;
+	long long *c_colbeg, *c_colend;
 
         /*printf("Use etree(A'+A)\n");*/
 
@@ -123,7 +123,7 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
 		  &bnz, &b_colptr, &b_rowind);
 
 	/* Form C = Pc*B*Pc'. */
-	c_colbeg = (int*) SUPERLU_MALLOC(2*n*sizeof(int));
+	c_colbeg = (long long*) SUPERLU_MALLOC(2*n*sizeof(long long));
 	c_colend = c_colbeg + n;
 	if (!c_colbeg ) ABORT("SUPERLU_MALLOC fails for c_colbeg/c_colend");
 	for (i = 0; i < n; i++) {
@@ -157,7 +157,7 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
 	/* In symmetric mode, do not do postorder here. */
 	if ( options->SymmetricMode == NO ) {
 	    /* Post order etree */
-	    post = (int *) TreePostorder(n, etree);
+	    post = (long long *) TreePostorder(n, etree);
 	    /* for (i = 0; i < n+1; ++i) inv_post[post[i]] = i;
 	       iwork = post; */
 
@@ -165,7 +165,7 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
 	    print_int_vec("post:", n+1, post);
 	    check_perm("post", n, post);	
 #endif	
-	    iwork = (int*) SUPERLU_MALLOC((n+1)*sizeof(int)); 
+	    iwork = (long long*) SUPERLU_MALLOC((n+1)*sizeof(long long)); 
 	    if ( !iwork ) ABORT("SUPERLU_MALLOC fails for iwork[]");
 
 	    /* Renumber etree in postorder */
@@ -198,12 +198,12 @@ sp_preorder(superlu_options_t *options,  SuperMatrix *A, int *perm_c,
 
 }
 
-int check_perm(char *what, int n, int *perm)
+long long check_perm(char *what, long long n, long long *perm)
 {
-    register int i;
-    int          *marker;
-    /*marker = (int *) calloc(n, sizeof(int));*/
-    marker = (int *) malloc(n * sizeof(int));
+    register long long i;
+    long long          *marker;
+    /*marker = (long long *) calloc(n, sizeof(long long));*/
+    marker = (long long *) malloc(n * sizeof(long long));
     for (i = 0; i < n; ++i) marker[i] = 0;
 
     for (i = 0; i < n; ++i) {

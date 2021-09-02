@@ -90,14 +90,14 @@ at the top-level directory.
 
 
 /*! \brief Eat up the rest of the current line */
-int dDumpLine(FILE *fp)
+long long dDumpLine(FILE *fp)
 {
-    register int c;
+    register long long c;
     while ((c = fgetc(fp)) != '\n') ;
     return 0;
 }
 
-int dParseIntFormat(char *buf, int *num, int *size)
+long long dParseIntFormat(char *buf, long long *num, long long *size)
 {
     char *tmp;
 
@@ -110,7 +110,7 @@ int dParseIntFormat(char *buf, int *num, int *size)
     return 0;
 }
 
-int dParseFloatFormat(char *buf, int *num, int *size)
+long long dParseFloatFormat(char *buf, long long *num, long long *size)
 {
     char *tmp, *period;
     
@@ -137,9 +137,9 @@ int dParseFloatFormat(char *buf, int *num, int *size)
     return 0;
 }
 
-static int ReadVector(FILE *fp, int n, int *where, int perline, int persize)
+static long long ReadVector(FILE *fp, long long n, long long *where, long long perline, long long persize)
 {
-    register int i, j, item;
+    register long long i, j, item;
     char tmp, buf[100];
     
     i = 0;
@@ -157,9 +157,9 @@ static int ReadVector(FILE *fp, int n, int *where, int perline, int persize)
     return 0;
 }
 
-int dReadValues(FILE *fp, int n, double *destination, int perline, int persize)
+long long dReadValues(FILE *fp, long long n, double *destination, long long perline, long long persize)
 {
-    register int i, j, k, s;
+    register long long i, j, k, s;
     char tmp, buf[100];
     
     i = 0;
@@ -188,22 +188,22 @@ int dReadValues(FILE *fp, int n, double *destination, int perline, int persize)
  * </pre>
  */
 static void
-FormFullA(int n, int *nonz, double **nzval, int **rowind, int **colptr)
+FormFullA(long long n, long long *nonz, double **nzval, long long **rowind, long long **colptr)
 {
-    register int i, j, k, col, new_nnz;
-    int *t_rowind, *t_colptr, *al_rowind, *al_colptr, *a_rowind, *a_colptr;
-    int *marker;
+    register long long i, j, k, col, new_nnz;
+    long long *t_rowind, *t_colptr, *al_rowind, *al_colptr, *a_rowind, *a_colptr;
+    long long *marker;
     double *t_val, *al_val, *a_val;
 
     al_rowind = *rowind;
     al_colptr = *colptr;
     al_val = *nzval;
 
-    if ( !(marker =(int *) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(marker =(long long *) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for marker[]");
-    if ( !(t_colptr = (int *) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(t_colptr = (long long *) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC t_colptr[]");
-    if ( !(t_rowind = (int *) SUPERLU_MALLOC( *nonz * sizeof(int)) ) )
+    if ( !(t_rowind = (long long *) SUPERLU_MALLOC( *nonz * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for t_rowind[]");
     if ( !(t_val = (double*) SUPERLU_MALLOC( *nonz * sizeof(double)) ) )
 	ABORT("SUPERLU_MALLOC fails for t_val[]");
@@ -230,9 +230,9 @@ FormFullA(int n, int *nonz, double **nzval, int **rowind, int **colptr)
 	}
 
     new_nnz = *nonz * 2 - n;
-    if ( !(a_colptr = (int *) SUPERLU_MALLOC( (n+1) * sizeof(int)) ) )
+    if ( !(a_colptr = (long long *) SUPERLU_MALLOC( (n+1) * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC a_colptr[]");
-    if ( !(a_rowind = (int *) SUPERLU_MALLOC( new_nnz * sizeof(int)) ) )
+    if ( !(a_rowind = (long long *) SUPERLU_MALLOC( new_nnz * sizeof(long long)) ) )
 	ABORT("SUPERLU_MALLOC fails for a_rowind[]");
     if ( !(a_val = (double*) SUPERLU_MALLOC( new_nnz * sizeof(double)) ) )
 	ABORT("SUPERLU_MALLOC fails for a_val[]");
@@ -282,14 +282,14 @@ FormFullA(int n, int *nonz, double **nzval, int **rowind, int **colptr)
 }
 
 void
-dreadhb(FILE *fp, int *nrow, int *ncol, int *nonz,
-	double **nzval, int **rowind, int **colptr)
+dreadhb(FILE *fp, long long *nrow, long long *ncol, long long *nonz,
+	double **nzval, long long **rowind, long long **colptr)
 {
 
-    register int i, numer_lines = 0, rhscrd = 0;
-    int tmp, colnum, colsize, rownum, rowsize, valnum, valsize;
+    register long long i, numer_lines = 0, rhscrd = 0;
+    long long tmp, colnum, colsize, rownum, rowsize, valnum, valsize;
     char buf[100], type[4], key[10];
-    int sym;
+    long long sym;
 
     /* Line 1 */
     fgets(buf, 100, fp);

@@ -51,24 +51,24 @@ at the top-level directory.
  * </pre>
  */
 
-int
+long long
 ssnode_dfs (
-	   const int  jcol,	    /* in - start of the supernode */
-	   const int  kcol, 	    /* in - end of the supernode */
-	   const int  *asub,        /* in */
-	   const int  *xa_begin,    /* in */
-	   const int  *xa_end,      /* in */
-	   int        *xprune,      /* out */
-	   int        *marker,      /* modified */
+	   const long long  jcol,	    /* in - start of the supernode */
+	   const long long  kcol, 	    /* in - end of the supernode */
+	   const long long  *asub,        /* in */
+	   const long long  *xa_begin,    /* in */
+	   const long long  *xa_end,      /* in */
+	   long long        *xprune,      /* out */
+	   long long        *marker,      /* modified */
 	   GlobalLU_t *Glu          /* modified */
 	   )
 {
 
-    register int i, k, ifrom, ito, nextl, new_next;
-    int          nsuper, krow, kmark, mem_error;
-    int          *xsup, *supno;
-    int          *lsub, *xlsub;
-    int          nzlmax;
+    register long long i, k, ifrom, ito, nextl, new_next;
+    long long          nsuper, krow, kmark, mem_error;
+    long long          *xsup, *supno;
+    long long          *lsub, *xlsub;
+    long long          nzlmax;
     
     xsup    = Glu->xsup;
     supno   = Glu->supno;

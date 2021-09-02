@@ -69,7 +69,7 @@ at the top-level directory.
  *          whether X should be overwritten by A * X  or A' * X.   
  *          On the final return from ZLACON, KASE will again be 0.   
  *
- *   isave  (input/output) int [3]
+ *   isave  (input/output) long long [3]
  *          ISAVE is INTEGER array, dimension (3)
  *          ISAVE is used to save variables between calls to ZLACON2
  *
@@ -86,11 +86,11 @@ at the top-level directory.
  * </pre>
  */
 
-int
-zlacon2_(int *n, doublecomplex *v, doublecomplex *x, double *est, int *kase, int isave[3])
+long long
+zlacon2_(long long *n, doublecomplex *v, doublecomplex *x, double *est, long long *kase, long long isave[3])
 {
     /* Table of constant values */
-    int c__1 = 1;
+    long long c__1 = 1;
     doublecomplex      zero = {0.0, 0.0};
     doublecomplex      one = {1.0, 0.0};
 
@@ -98,18 +98,18 @@ zlacon2_(int *n, doublecomplex *v, doublecomplex *x, double *est, int *kase, int
     double d__1;
     
     /* Local variables */
-    int jlast;
+    long long jlast;
     double altsgn, estold;
-    int i;
+    long long i;
     double temp;
     double safmin;
     extern double dmach(char *);
-    extern int izmax1_slu(int *, doublecomplex *, int *);
-    extern double dzsum1_slu(int *, doublecomplex *, int *);
+    extern long long izmax1_slu(long long *, doublecomplex *, long long *);
+    extern double dzsum1_slu(long long *, doublecomplex *, long long *);
 #ifdef _CRAY
-    extern int CCOPY(int *, doublecomplex *, int *, doublecomplex *, int *);
+    extern long long CCOPY(long long *, doublecomplex *, long long *, doublecomplex *, long long *);
 #else
-    extern int zcopy_(int *, doublecomplex *, int *, doublecomplex *, int *);
+    extern long long zcopy_(long long *, doublecomplex *, long long *, doublecomplex *, long long *);
 #endif
 
     safmin = dmach("Safe minimum");  /* lamch_("Safe minimum"); */

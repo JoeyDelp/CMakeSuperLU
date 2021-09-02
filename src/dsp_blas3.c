@@ -63,18 +63,18 @@ at the top-level directory.
  *               TRANSB = 'C' or 'c',  op( B ) = conjg( B' ).   
  *            Unchanged on exit.   
  * 
- *   M      - (input) int   
+ *   M      - (input) long long   
  *            On entry,  M  specifies  the number of rows of the matrix 
  *	     op( A ) and of the matrix C.  M must be at least zero. 
  *	     Unchanged on exit.   
  * 
- *   N      - (input) int
+ *   N      - (input) long long
  *            On entry,  N specifies the number of columns of the matrix 
  *	     op( B ) and the number of columns of the matrix C. N must be 
  *	     at least zero.
  *	     Unchanged on exit.   
  * 
- *   K      - (input) int
+ *   K      - (input) long long
  *            On entry, K specifies the number of columns of the matrix 
  *	     op( A ) and the number of rows of the matrix op( B ). K must 
  *	     be at least  zero.   
@@ -97,7 +97,7 @@ at the top-level directory.
  *            matrix B.   
  *            Unchanged on exit.   
  * 
- *   LDB    - (input) int
+ *   LDB    - (input) long long
  *            On entry, LDB specifies the first dimension of B as declared 
  *            in the calling (sub) program. LDB must be at least max( 1, n ).  
  *            Unchanged on exit.   
@@ -113,7 +113,7 @@ at the top-level directory.
  *            On exit, the array C is overwritten by the m by n matrix 
  *	     ( alpha*op( A )*B + beta*C ).   
  *  
- *   LDC    - (input) int
+ *   LDC    - (input) long long
  *            On entry, LDC specifies the first dimension of C as declared 
  *            in the calling (sub)program. LDC must be at least max(1,m).   
  *            Unchanged on exit.   
@@ -122,13 +122,13 @@ at the top-level directory.
  * </pre>
  */
 
-int
-sp_dgemm(char *transa, char *transb, int m, int n, int k, 
-         double alpha, SuperMatrix *A, double *b, int ldb, 
-         double beta, double *c, int ldc)
+long long
+sp_dgemm(char *transa, char *transb, long long m, long long n, long long k, 
+         double alpha, SuperMatrix *A, double *b, long long ldb, 
+         double beta, double *c, long long ldc)
 {
-    int    incx = 1, incy = 1;
-    int    j;
+    long long    incx = 1, incy = 1;
+    long long    j;
 
     for (j = 0; j < n; ++j) {
 	sp_dgemv(transa, alpha, A, &b[ldb*j], incx, beta, &c[ldc*j], incy);

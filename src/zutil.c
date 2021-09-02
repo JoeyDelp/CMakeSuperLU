@@ -36,8 +36,8 @@ at the top-level directory.
 #include "superlu/slu_zdefs.h"
 
 void
-zCreate_CompCol_Matrix(SuperMatrix *A, int m, int n, int nnz, 
-		       doublecomplex *nzval, int *rowind, int *colptr,
+zCreate_CompCol_Matrix(SuperMatrix *A, long long m, long long n, long long nnz, 
+		       doublecomplex *nzval, long long *rowind, long long *colptr,
 		       Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     NCformat *Astore;
@@ -57,8 +57,8 @@ zCreate_CompCol_Matrix(SuperMatrix *A, int m, int n, int nnz,
 }
 
 void
-zCreate_CompRow_Matrix(SuperMatrix *A, int m, int n, int nnz, 
-		       doublecomplex *nzval, int *colind, int *rowptr,
+zCreate_CompRow_Matrix(SuperMatrix *A, long long m, long long n, long long nnz, 
+		       doublecomplex *nzval, long long *colind, long long *rowptr,
 		       Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     NRformat *Astore;
@@ -82,7 +82,7 @@ void
 zCopy_CompCol_Matrix(SuperMatrix *A, SuperMatrix *B)
 {
     NCformat *Astore, *Bstore;
-    int      ncol, nnz, i;
+    long long      ncol, nnz, i;
 
     B->Stype = A->Stype;
     B->Dtype = A->Dtype;
@@ -100,7 +100,7 @@ zCopy_CompCol_Matrix(SuperMatrix *A, SuperMatrix *B)
 
 
 void
-zCreate_Dense_Matrix(SuperMatrix *X, int m, int n, doublecomplex *x, int ldx,
+zCreate_Dense_Matrix(SuperMatrix *X, long long m, long long n, doublecomplex *x, long long ldx,
 		    Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     DNformat    *Xstore;
@@ -118,12 +118,12 @@ zCreate_Dense_Matrix(SuperMatrix *X, int m, int n, doublecomplex *x, int ldx,
 }
 
 void
-zCopy_Dense_Matrix(int M, int N, doublecomplex *X, int ldx,
-			doublecomplex *Y, int ldy)
+zCopy_Dense_Matrix(long long M, long long N, doublecomplex *X, long long ldx,
+			doublecomplex *Y, long long ldy)
 {
 /*! \brief Copies a two-dimensional matrix X to another matrix Y.
  */
-    int    i, j;
+    long long    i, j;
     
     for (j = 0; j < N; ++j)
         for (i = 0; i < M; ++i)
@@ -131,9 +131,9 @@ zCopy_Dense_Matrix(int M, int N, doublecomplex *X, int ldx,
 }
 
 void
-zCreate_SuperNode_Matrix(SuperMatrix *L, int m, int n, int nnz, 
-			doublecomplex *nzval, int *nzval_colptr, int *rowind,
-			int *rowind_colptr, int *col_to_sup, int *sup_to_col,
+zCreate_SuperNode_Matrix(SuperMatrix *L, long long m, long long n, long long nnz, 
+			doublecomplex *nzval, long long *nzval_colptr, long long *rowind,
+			long long *rowind_colptr, long long *col_to_sup, long long *sup_to_col,
 			Stype_t stype, Dtype_t dtype, Mtype_t mtype)
 {
     SCformat *Lstore;
@@ -161,18 +161,18 @@ zCreate_SuperNode_Matrix(SuperMatrix *L, int m, int n, int nnz,
 /*! \brief Convert a row compressed storage into a column compressed storage.
  */
 void
-zCompRow_to_CompCol(int m, int n, int nnz, 
-		    doublecomplex *a, int *colind, int *rowptr,
-		    doublecomplex **at, int **rowind, int **colptr)
+zCompRow_to_CompCol(long long m, long long n, long long nnz, 
+		    doublecomplex *a, long long *colind, long long *rowptr,
+		    doublecomplex **at, long long **rowind, long long **colptr)
 {
-    register int i, j, col, relpos;
-    int *marker;
+    register long long i, j, col, relpos;
+    long long *marker;
 
     /* Allocate storage for another copy of the matrix. */
     *at = (doublecomplex *) doublecomplexMalloc(nnz);
-    *rowind = (int *) intMalloc(nnz);
-    *colptr = (int *) intMalloc(n+1);
-    marker = (int *) intCalloc(n);
+    *rowind = (long long *) intMalloc(nnz);
+    *colptr = (long long *) intMalloc(n+1);
+    marker = (long long *) intCalloc(n);
     
     /* Get counts of each column of A, and set up column pointers */
     for (i = 0; i < m; ++i)
@@ -202,7 +202,7 @@ void
 zPrint_CompCol_Matrix(char *what, SuperMatrix *A)
 {
     NCformat     *Astore;
-    register int i,n;
+    register long long i,n;
     double       *dp;
     
     printf("\nCompCol matrix %s:\n", what);
@@ -225,9 +225,9 @@ void
 zPrint_SuperNode_Matrix(char *what, SuperMatrix *A)
 {
     SCformat     *Astore;
-    register int i, j, k, c, d, n, nsup;
+    register long long i, j, k, c, d, n, nsup;
     double       *dp;
-    int *col_to_sup, *sup_to_col, *rowind, *rowind_colptr;
+    long long *col_to_sup, *sup_to_col, *rowind, *rowind_colptr;
     
     printf("\nSuperNode matrix %s:\n", what);
     printf("Stype %d, Dtype %d, Mtype %d\n", A->Stype,A->Dtype,A->Mtype);
@@ -275,7 +275,7 @@ void
 zPrint_Dense_Matrix(char *what, SuperMatrix *A)
 {
     DNformat     *Astore = (DNformat *) A->Store;
-    register int i, j, lda = Astore->lda;
+    register long long i, j, lda = Astore->lda;
     double       *dp;
     
     printf("\nDense matrix %s:\n", what);
@@ -294,15 +294,15 @@ zPrint_Dense_Matrix(char *what, SuperMatrix *A)
 /*! \brief Diagnostic print of column "jcol" in the U/L factor.
  */
 void
-zprint_lu_col(char *msg, int jcol, int pivrow, int *xprune, GlobalLU_t *Glu)
+zprint_lu_col(char *msg, long long jcol, long long pivrow, long long *xprune, GlobalLU_t *Glu)
 {
-    int     i, k, fsupc;
-    int     *xsup, *supno;
-    int     *xlsub, *lsub;
+    long long     i, k, fsupc;
+    long long     *xsup, *supno;
+    long long     *xlsub, *lsub;
     doublecomplex  *lusup;
-    int     *xlusup;
+    long long     *xlusup;
     doublecomplex  *ucol;
-    int     *usub, *xusub;
+    long long     *usub, *xusub;
 
     xsup    = Glu->xsup;
     supno   = Glu->supno;
@@ -335,9 +335,9 @@ zprint_lu_col(char *msg, int jcol, int pivrow, int *xprune, GlobalLU_t *Glu)
 
 /*! \brief Check whether tempv[] == 0. This should be true before and after calling any numeric routines, i.e., "panel_bmod" and "column_bmod". 
  */
-void zcheck_tempv(int n, doublecomplex *tempv)
+void zcheck_tempv(long long n, doublecomplex *tempv)
 {
-    int i;
+    long long i;
 	
     for (i = 0; i < n; i++) {
 	if ((tempv[i].r != 0.0) || (tempv[i].i != 0.0))
@@ -350,9 +350,9 @@ void zcheck_tempv(int n, doublecomplex *tempv)
 
 
 void
-zGenXtrue(int n, int nrhs, doublecomplex *x, int ldx)
+zGenXtrue(long long n, long long nrhs, doublecomplex *x, long long ldx)
 {
-    int  i, j;
+    long long  i, j;
     for (j = 0; j < nrhs; ++j)
 	for (i = 0; i < n; ++i) {
 	    x[i + j*ldx].r = 1.0;
@@ -363,7 +363,7 @@ zGenXtrue(int n, int nrhs, doublecomplex *x, int ldx)
 /*! \brief Let rhs[i] = sum of i-th row of A, so the solution vector is all 1's
  */
 void
-zFillRHS(trans_t trans, int nrhs, doublecomplex *x, int ldx,
+zFillRHS(trans_t trans, long long nrhs, doublecomplex *x, long long ldx,
          SuperMatrix *A, SuperMatrix *B)
 {
     NCformat *Astore;
@@ -372,7 +372,7 @@ zFillRHS(trans_t trans, int nrhs, doublecomplex *x, int ldx,
     doublecomplex   *rhs;
     doublecomplex one = {1.0, 0.0};
     doublecomplex zero = {0.0, 0.0};
-    int      ldc;
+    long long      ldc;
     char transc[1];
 
     Astore = A->Store;
@@ -392,9 +392,9 @@ zFillRHS(trans_t trans, int nrhs, doublecomplex *x, int ldx,
 /*! \brief Fills a doublecomplex precision array with a given value.
  */
 void 
-zfill(doublecomplex *a, int alen, doublecomplex dval)
+zfill(doublecomplex *a, long long alen, doublecomplex dval)
 {
-    register int i;
+    register long long i;
     for (i = 0; i < alen; i++) a[i] = dval;
 }
 
@@ -402,13 +402,13 @@ zfill(doublecomplex *a, int alen, doublecomplex dval)
 
 /*! \brief Check the inf-norm of the error vector 
  */
-void zinf_norm_error(int nrhs, SuperMatrix *X, doublecomplex *xtrue)
+void zinf_norm_error(long long nrhs, SuperMatrix *X, doublecomplex *xtrue)
 {
     DNformat *Xstore;
     double err, xnorm;
     doublecomplex *Xmat, *soln_work;
     doublecomplex temp;
-    int i, j;
+    long long i, j;
 
     Xstore = X->Store;
     Xmat = Xstore->nzval;
@@ -474,10 +474,10 @@ zPrintPerf(SuperMatrix *L, SuperMatrix *U, mem_usage_t *mem_usage,
 
 
 
-int
-print_doublecomplex_vec(char *what, int n, doublecomplex *vec)
+long long
+print_doublecomplex_vec(char *what, long long n, doublecomplex *vec)
 {
-    int i;
+    long long i;
     printf("%s: n %d\n", what, n);
     for (i = 0; i < n; ++i) printf("%d\t%f%f\n", i, vec[i].r, vec[i].i);
     return 0;

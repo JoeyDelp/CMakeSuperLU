@@ -78,13 +78,13 @@ at the top-level directory.
  *             element right-hand side vector b. On exit, X is overwritten 
  *             with the solution vector x.
  *
- *   info    - (output) int*
+ *   info    - (output) long long*
  *             If *info = -i, the i-th argument had an illegal value.
  * </pre>
  */
-int
+long long
 sp_dtrsv(char *uplo, char *trans, char *diag, SuperMatrix *L, 
-         SuperMatrix *U, double *x, SuperLUStat_t *stat, int *info)
+         SuperMatrix *U, double *x, SuperLUStat_t *stat, long long *info)
 {
 #ifdef _CRAY
     _fcd ftcs1 = _cptofcd("L", strlen("L")),
@@ -94,11 +94,11 @@ sp_dtrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
     SCformat *Lstore;
     NCformat *Ustore;
     double   *Lval, *Uval;
-    int incx = 1, incy = 1;
+    long long incx = 1, incy = 1;
     double alpha = 1.0, beta = 1.0;
-    int nrow;
-    int fsupc, nsupr, nsupc, luptr, istart, irow;
-    int i, k, iptr, jcol;
+    long long nrow;
+    long long fsupc, nsupr, nsupc, luptr, istart, irow;
+    long long i, k, iptr, jcol;
     double *work;
     flops_t solve_ops;
 
@@ -346,7 +346,7 @@ sp_dtrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
  *            Before entry, the incremented array X must contain the   
  *            vector x.   
  *
- *   INCX   - (input) int
+ *   INCX   - (input) long long
  *            On entry, INCX specifies the increment for the elements of   
  *            X. INCX must not be zero.   
  *
@@ -362,7 +362,7 @@ sp_dtrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
  *            must contain the vector y. On exit, Y is overwritten by the 
  *            updated vector y.
  *	     
- *   INCY   - (input) int
+ *   INCY   - (input) long long
  *            On entry, INCY specifies the increment for the elements of   
  *            Y. INCY must not be zero.   
  *
@@ -370,18 +370,18 @@ sp_dtrsv(char *uplo, char *trans, char *diag, SuperMatrix *L,
  * </pre>
  */
 
-int
+long long
 sp_dgemv(char *trans, double alpha, SuperMatrix *A, double *x, 
-	 int incx, double beta, double *y, int incy)
+	 long long incx, double beta, double *y, long long incy)
 {
     /* Local variables */
     NCformat *Astore;
     double   *Aval;
-    int info;
+    long long info;
     double temp;
-    int lenx, leny, i, j, irow;
-    int iy, jx, jy, kx, ky;
-    int notran;
+    long long lenx, leny, i, j, irow;
+    long long iy, jx, jy, kx, ky;
+    long long notran;
 
     notran = ( strncmp(trans, "N", 1)==0 || strncmp(trans, "n", 1)==0 );
     Astore = A->Store;

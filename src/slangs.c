@@ -74,7 +74,7 @@ float slangs(char *norm, SuperMatrix *A)
     /* Local variables */
     NCformat *Astore;
     float   *Aval;
-    int      i, j, irow;
+    long long      i, j, irow;
     float   value, sum;
     float   *rwork;
 

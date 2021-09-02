@@ -23,8 +23,8 @@ at the top-level directory.
 
 
 void
-sreadtriple(int *m, int *n, int *nonz,
-	    float **nzval, int **rowind, int **colptr)
+sreadtriple(long long *m, long long *n, long long *nonz,
+	    float **nzval, long long **rowind, long long **colptr)
 {
 /*
  * Output parameters
@@ -34,10 +34,10 @@ sreadtriple(int *m, int *n, int *nonz,
  *	row i of A is given by a[k],k=xa[i],...,xa[i+1]-1.
  *
  */
-    int    j, k, jsize, nnz, nz;
+    long long    j, k, jsize, nnz, nz;
     float *a, *val;
-    int    *asub, *xa, *row, *col;
-    int    zero_base = 0;
+    long long    *asub, *xa, *row, *col;
+    long long    zero_base = 0;
 
     /*  Matrix format:
      *    First line:  #rows, #cols, #non-zero
@@ -54,8 +54,8 @@ sreadtriple(int *m, int *n, int *nonz,
     xa   = *colptr;
 
     val = (float *) SUPERLU_MALLOC(*nonz * sizeof(float));
-    row = (int *) SUPERLU_MALLOC(*nonz * sizeof(int));
-    col = (int *) SUPERLU_MALLOC(*nonz * sizeof(int));
+    row = (long long *) SUPERLU_MALLOC(*nonz * sizeof(long long));
+    col = (long long *) SUPERLU_MALLOC(*nonz * sizeof(long long));
 
     for (j = 0; j < *n; ++j) xa[j] = 0;
 
@@ -120,7 +120,7 @@ sreadtriple(int *m, int *n, int *nonz,
 
 #ifdef CHK_INPUT
     {
-	int i;
+	long long i;
 	for (i = 0; i < *n; i++) {
 	    printf("Col %d, xa %d\n", i, xa[i]);
 	    for (k = xa[i]; k < xa[i+1]; k++)
@@ -132,11 +132,11 @@ sreadtriple(int *m, int *n, int *nonz,
 }
 
 
-void sreadrhs(int m, float *b)
+void sreadrhs(long long m, float *b)
 {
     FILE *fp, *fopen();
-    int i;
-    /*int j;*/
+    long long i;
+    /*long long j;*/
 
     if ( !(fp = fopen("b.dat", "r")) ) {
         fprintf(stderr, "dreadrhs: file does not exist\n");
